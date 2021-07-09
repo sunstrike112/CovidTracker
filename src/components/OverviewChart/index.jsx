@@ -7,11 +7,10 @@ function OverviewChart(props) {
   const [cases, setCases] = useState([]);
   const [deaths, setDeaths] = useState([]);
   const [recovered, setRecovered] = useState([]);
-  const [dataChart, setDataChart] = useState([]);
-  let data = dataChart;
+  let data = cases.concat(deaths, recovered);
 
   useEffect(() => {
-    const handleApi = () => {
+    const handleDataChart = () => {
       axios
         .get(`https://disease.sh/v3/covid-19/historical/all?lastdays=all`)
         .then((response) => {
@@ -24,7 +23,6 @@ function OverviewChart(props) {
               return objectElement;
             })
           );
-          setDataChart(cases.concat(deaths, recovered));
           setDeaths(
             Object.entries(response.data.deaths).map((element, key) => {
               const arrayElement = element;
@@ -34,7 +32,6 @@ function OverviewChart(props) {
               return objectElement;
             })
           );
-          setDataChart(cases.concat(deaths, recovered));
           setRecovered(
             Object.entries(response.data.recovered).map((element, key) => {
               const arrayElement = element;
@@ -44,16 +41,12 @@ function OverviewChart(props) {
               return objectElement;
             })
           );
-          setDataChart(cases.concat(deaths, recovered));
         })
         .catch(() => {
           alert(`Request to API failed, Please try again !!!`);
         });
     };
-    setTimeout(() => {
-      handleApi();
-    }, 3000);
-    setDataChart(cases.concat(deaths, recovered));
+    handleDataChart();
   }, []);
 
   const config = {
@@ -73,6 +66,14 @@ function OverviewChart(props) {
       },
     },
     color: ['#1979C9', '#D62A0D', '#33fa19'],
+    legend: { position: 'top' },
+    smooth: true,
+    animation: {
+      appear: {
+        animation: 'path-in',
+        duration: 10000,
+      },
+    },
   };
 
   return (
