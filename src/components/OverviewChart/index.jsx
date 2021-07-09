@@ -1,41 +1,50 @@
 import React, { useState, useEffect } from 'react';
 
-// import { Line } from '@ant-design/charts';
+import { Line } from '@ant-design/charts';
 import axios from 'axios';
 
 function OverviewChart(props) {
+  const [cases, setCases] = useState([]);
+  const [deaths, setDeaths] = useState([]);
+  const [recovered, setRecovered] = useState([]);
   const [dataChart, setDataChart] = useState([]);
-  let cases = [];
-
-  const buildChartData = (data, casesType) => {
-    let chartData = [];
-    let lastDataPoint;
-    for (let date in data.cases) {
-      if (lastDataPoint) {
-        let newDataPoint = {
-          x: date,
-          y: data[casesType][date] - lastDataPoint,
-        };
-        chartData.push(newDataPoint);
-      }
-      lastDataPoint = data[casesType][date];
-    }
-    return chartData;
-  };
+  let data = dataChart;
 
   useEffect(() => {
-    const handleApi = async () => {
-      await axios
+    const handleApi = () => {
+      axios
         .get(`https://disease.sh/v3/covid-19/historical/all?lastdays=all`)
         .then((response) => {
-          setDataChart(
+          setCases(
             Object.entries(response.data.cases).map((element, key) => {
               const arrayElement = element;
-              const [time, cases] = arrayElement;
-              const objectElement = { time, cases };
+              const [time, value, category] = arrayElement;
+              const objectElement = { time, value, category };
+              objectElement.category = 'cases';
               return objectElement;
             })
           );
+          setDataChart(cases.concat(deaths, recovered));
+          setDeaths(
+            Object.entries(response.data.deaths).map((element, key) => {
+              const arrayElement = element;
+              const [time, value, category] = arrayElement;
+              const objectElement = { time, value, category };
+              objectElement.category = 'deaths';
+              return objectElement;
+            })
+          );
+          setDataChart(cases.concat(deaths, recovered));
+          setRecovered(
+            Object.entries(response.data.recovered).map((element, key) => {
+              const arrayElement = element;
+              const [time, value, category] = arrayElement;
+              const objectElement = { time, value, category };
+              objectElement.category = 'recovered';
+              return objectElement;
+            })
+          );
+          setDataChart(cases.concat(deaths, recovered));
         })
         .catch(() => {
           alert(`Request to API failed, Please try again !!!`);
@@ -43,13 +52,32 @@ function OverviewChart(props) {
     };
     setTimeout(() => {
       handleApi();
-      console.log(dataChart);
     }, 3000);
+    setDataChart(cases.concat(deaths, recovered));
   }, []);
 
+  const config = {
+    data,
+    width: 1200,
+    height: 400,
+    xField: 'time',
+    yField: 'value',
+    seriesField: 'category',
+    yAxis: {
+      label: {
+        formatter: function formatter(v) {
+          return ''.concat(v).replace(/\d{1,3}(?=(\d{3})+$)/g, function (s) {
+            return ''.concat(s, ',');
+          });
+        },
+      },
+    },
+    color: ['#1979C9', '#D62A0D', '#33fa19'],
+  };
+
   return (
-    <div>
-      <p></p>
+    <div className="overviewchart">
+      <Line {...config} />;
     </div>
   );
 }
