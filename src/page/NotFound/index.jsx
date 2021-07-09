@@ -9,7 +9,6 @@ function PageNotFound() {
       <h1>Page Not Found</h1>
       <p>
         Please check your URL and make sure that the address entered is correct
-        haahah
       </p>
       <Link to="/signin">
         <button type="button">Back</button>
