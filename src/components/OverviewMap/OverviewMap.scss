@@ -1,10 +1,11 @@
 .mapboxgl-map {
   width: 80vw;
-  height: 78vh;
+  height: 700px;
   margin-top: 50px;
 }
 
 .mapboxgl-canvas {
+  height: 100%;
   border: 5px solid black;
 }
 

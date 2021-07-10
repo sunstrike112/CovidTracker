@@ -1,7 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useLayoutEffect, useEffect } from 'react';
 
 import { Line, Column } from '@ant-design/charts';
 import axios from 'axios';
+
+import './OverviewChart.scss';
+import {
+  formatCases,
+  formatDeaths,
+  formatRecovered,
+} from '../../utils/FormatData/index';
 
 function OverviewChart(props) {
   const [cases, setCases] = useState([]);
@@ -14,33 +21,9 @@ function OverviewChart(props) {
       axios
         .get(`https://disease.sh/v3/covid-19/historical/all?lastdays=all`)
         .then((response) => {
-          setCases(
-            Object.entries(response.data.cases).map((element, key) => {
-              const arrayElement = element;
-              const [time, value, category] = arrayElement;
-              const objectElement = { time, value, category };
-              objectElement.category = 'cases';
-              return objectElement;
-            })
-          );
-          setDeaths(
-            Object.entries(response.data.deaths).map((element, key) => {
-              const arrayElement = element;
-              const [time, value, category] = arrayElement;
-              const objectElement = { time, value, category };
-              objectElement.category = 'deaths';
-              return objectElement;
-            })
-          );
-          setRecovered(
-            Object.entries(response.data.recovered).map((element, key) => {
-              const arrayElement = element;
-              const [time, value, category] = arrayElement;
-              const objectElement = { time, value, category };
-              objectElement.category = 'recovered';
-              return objectElement;
-            })
-          );
+          setCases(formatCases(response.data.cases));
+          setDeaths(formatDeaths(response.data.deaths));
+          setRecovered(formatRecovered(response.data.recovered));
         })
         .catch(() => {
           alert(`Request to API failed, Please try again !!!`);
@@ -51,7 +34,6 @@ function OverviewChart(props) {
 
   const config = {
     data,
-    autoFit: true,
     xField: 'time',
     yField: 'value',
     seriesField: 'category',
@@ -70,7 +52,7 @@ function OverviewChart(props) {
     animation: {
       appear: {
         animation: 'path-in',
-        duration: 10000,
+        duration: 1000,
       },
     },
   };
@@ -79,7 +61,6 @@ function OverviewChart(props) {
     <div className="overviewchart">
       <h2>World overview chart</h2>
       <Line {...config} />;
-      <Column {...config} />
     </div>
   );
 }

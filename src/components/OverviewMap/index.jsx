@@ -6,6 +6,8 @@ import lookup from 'country-code-lookup';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import './OverviewMap.scss';
+import { getIso } from '../../utils/GetIso/index';
+import { createPopup } from '../../utils/CreatePopup/index';
 
 mapboxgl.accessToken = `pk.eyJ1Ijoic3Vuc3RyaWtlMTEyIiwiYSI6ImNrcXV4OTY2djA2bDIydXBjNHZobTBtbzMifQ.BYCyLBgyOMbG7eycxXX_6A`;
 
@@ -43,8 +45,13 @@ function OverviewMap() {
         container: covidMap.current,
         style: 'mapbox://styles/notalemesa/ck8dqwdum09ju1ioj65e3ql3k',
         center: [110, 15],
-        zoom: 2.8,
+        zoom: 4,
       });
+      const popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false,
+      });
+
       map.addControl(new mapboxgl.NavigationControl());
       map.once('load', function () {
         map.resize();
@@ -60,7 +67,7 @@ function OverviewMap() {
           source: 'points',
           type: 'circle',
           paint: {
-            'circle-opacity': 0.9,
+            'circle-opacity': 0.5,
             'circle-stroke-width': [
               'interpolate',
               ['linear'],
@@ -116,59 +123,35 @@ function OverviewMap() {
               500000,
               '#b10026',
               1000000,
-              '#580215',
+              '#36030e',
             ],
           },
         });
 
-        const popup = new mapboxgl.Popup({
-          closeButton: false,
-          closeOnClick: false,
-        });
-        let lastId;
-        map.on('mousemove', 'circles', (e) => {
-          const id = e.features[0].properties.id;
-          if (id !== lastId) {
-            lastId = id;
-            const { cases, deaths, recovered, country, province } =
-              e.features[0].properties;
-            map.getCanvas().style.cursor = 'pointer';
-            const coordinates = e.features[0].geometry.coordinates.slice();
-            let countryISO =
-              lookup.byCountry(country)?.iso2.toLowerCase() ||
-              lookup.byInternet(country)?.iso2.toLowerCase();
-            if (country == 'Burma') countryISO = 'mm';
-            if (country == 'Korea, South') countryISO = 'kr';
-            if (country == 'Taiwan*') countryISO = 'tw';
-            if (
-              country == 'Congo (Brazzaville)' ||
-              country == 'Congo (Kinshasa)'
-            )
-              countryISO = 'cg';
-            if (country == 'Micronesia') countryISO = 'fm';
-            const provinceHTML =
-              province !== 'null' ? `<p>Province: <b>${province}</b></p>` : '';
-            const countryFlagHTML = Boolean(countryISO)
-              ? `<img src="https://www.countryflags.io/${countryISO}/flat/64.png"></img>`
-              : '';
-            const popUp = `
-                <p>Country: <b>${country}</b></p>
-                ${provinceHTML}
-                <p>Cases: <b>${cases}</b></p>
-                <p>Deaths: <b>${deaths}</b></p>
-                <p>Recovered: <b>${recovered}</b></p>
-                ${countryFlagHTML}
-              `;
-
-            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-              coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-            }
-            popup.setLngLat(coordinates).setHTML(popUp).addTo(map);
+        map.on('mousemove', 'circles', (position) => {
+          const { cases, deaths, recovered, country, province } =
+            position.features[0].properties;
+          map.getCanvas().style.cursor = 'pointer';
+          const coordinates = position.features[0].geometry.coordinates.slice();
+          while (Math.abs(position.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += position.lngLat.lng > coordinates[0] ? 360 : -360;
           }
+          popup
+            .setLngLat(coordinates)
+            .setHTML(
+              createPopup(
+                cases,
+                deaths,
+                recovered,
+                country,
+                province,
+                getIso(country)
+              )
+            )
+            .addTo(map);
         });
 
         map.on('mouseleave', 'circles', function () {
-          lastId = undefined;
           map.getCanvas().style.cursor = '';
           popup.remove();
         });

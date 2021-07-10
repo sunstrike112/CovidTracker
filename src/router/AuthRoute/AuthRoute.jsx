@@ -1,7 +1,7 @@
-import React from "react";
-import { Redirect, Route } from "react-router-dom";
+import React from 'react';
+import { Redirect, Route } from 'react-router-dom';
 
-import { checkLoggedIn } from "../../utils/CheckLoggedIn/index";
+import { checkLoggedIn } from '../../utils/CheckLoggedIn/index';
 
 function AuthRoute({ component: Component, ...rest }) {
   return (
@@ -12,7 +12,7 @@ function AuthRoute({ component: Component, ...rest }) {
           return checkLoggedIn() === false ? (
             <Component {...props} />
           ) : (
-            <Redirect to={{ pathname: "/", state: { from: props.location } }} />
+            <Redirect to={{ pathname: '/', state: { from: props.location } }} />
           );
         }}
       />
