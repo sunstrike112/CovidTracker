@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { Line } from '@ant-design/charts';
+import { Line, Column } from '@ant-design/charts';
 import axios from 'axios';
 
 function OverviewChart(props) {
@@ -51,8 +51,7 @@ function OverviewChart(props) {
 
   const config = {
     data,
-    width: 1200,
-    height: 400,
+    autoFit: true,
     xField: 'time',
     yField: 'value',
     seriesField: 'category',
@@ -78,7 +77,9 @@ function OverviewChart(props) {
 
   return (
     <div className="overviewchart">
+      <h2>World overview chart</h2>
       <Line {...config} />;
+      <Column {...config} />
     </div>
   );
 }

@@ -6,12 +6,11 @@ import lookup from 'country-code-lookup';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import './OverviewMap.scss';
-import axios from 'axios';
 
 mapboxgl.accessToken = `pk.eyJ1Ijoic3Vuc3RyaWtlMTEyIiwiYSI6ImNrcXV4OTY2djA2bDIydXBjNHZobTBtbzMifQ.BYCyLBgyOMbG7eycxXX_6A`;
 
 function OverviewMap() {
-  const mapboxElRef = useRef(null);
+  const covidMap = useRef(null);
 
   const fetcher = (url) =>
     fetch(url)
@@ -41,15 +40,14 @@ function OverviewMap() {
   useEffect(() => {
     if (data) {
       const map = new mapboxgl.Map({
-        container: mapboxElRef.current,
+        container: covidMap.current,
         style: 'mapbox://styles/notalemesa/ck8dqwdum09ju1ioj65e3ql3k',
         center: [110, 15],
-        zoom: 3,
+        zoom: 2.8,
       });
-
       map.addControl(new mapboxgl.NavigationControl());
-
       map.once('load', function () {
+        map.resize();
         map.addSource('points', {
           type: 'geojson',
           data: {
@@ -84,18 +82,20 @@ function OverviewMap() {
               'interpolate',
               ['linear'],
               ['get', 'cases'],
+              1,
               6,
+              1000,
               6,
-              5000,
+              50000,
               6,
-              10000,
-              6,
-              25000,
-              6,
-              75000,
-              6,
-              100000,
-              6,
+              150000,
+              8,
+              200000,
+              10,
+              500000,
+              12,
+              1000000,
+              16,
             ],
             'circle-color': [
               'interpolate',
@@ -103,18 +103,20 @@ function OverviewMap() {
               ['get', 'cases'],
               1,
               '#ffffb2',
-              5000,
+              1000,
               '#fed976',
-              10000,
-              '#feb24c',
-              25000,
-              '#fd8d3c',
               50000,
-              '#fc4e2a',
+              '#feb24c',
               75000,
+              '#fd8d3c',
+              150000,
+              '#fc4e2a',
+              200000,
               '#e31a1c',
-              100000,
+              500000,
               '#b10026',
+              1000000,
+              '#580215',
             ],
           },
         });
@@ -123,9 +125,7 @@ function OverviewMap() {
           closeButton: false,
           closeOnClick: false,
         });
-
         let lastId;
-
         map.on('mousemove', 'circles', (e) => {
           const id = e.features[0].properties.id;
           if (id !== lastId) {
@@ -145,23 +145,24 @@ function OverviewMap() {
               country == 'Congo (Kinshasa)'
             )
               countryISO = 'cg';
+            if (country == 'Micronesia') countryISO = 'fm';
             const provinceHTML =
               province !== 'null' ? `<p>Province: <b>${province}</b></p>` : '';
             const countryFlagHTML = Boolean(countryISO)
               ? `<img src="https://www.countryflags.io/${countryISO}/flat/64.png"></img>`
               : '';
             const popUp = `
-              <p>Country: <b>${country}</b></p>
-              ${provinceHTML}
-              <p>Cases: <b>${cases}</b></p>
-              <p>Deaths: <b>${deaths}</b></p>
-              <p>Recovered: <b>${recovered}</b></p>
-              ${countryFlagHTML}`;
+                <p>Country: <b>${country}</b></p>
+                ${provinceHTML}
+                <p>Cases: <b>${cases}</b></p>
+                <p>Deaths: <b>${deaths}</b></p>
+                <p>Recovered: <b>${recovered}</b></p>
+                ${countryFlagHTML}
+              `;
 
             while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
               coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
             }
-
             popup.setLngLat(coordinates).setHTML(popUp).addTo(map);
           }
         });
@@ -175,13 +176,7 @@ function OverviewMap() {
     }
   }, [data]);
 
-  return (
-    <div className="overviewMap">
-      <div className="mapContainer">
-        <div className="mapBox" ref={mapboxElRef} />
-      </div>
-    </div>
-  );
+  return <div className="overviewMap" ref={covidMap}></div>;
 }
 
 export default OverviewMap;
