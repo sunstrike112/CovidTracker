@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-import { Line, Column } from '@ant-design/charts';
+import { Line } from '@ant-design/charts';
 import { DatePicker } from 'antd';
 import axios from 'axios';
 import 'antd/dist/antd.css';
 
-import './OverviewChart.scss';
+import './OverviewLineChart.scss';
 import {
   formatCases,
   formatDeaths,
@@ -13,7 +13,7 @@ import {
 } from '../../utils/FormatData/index';
 import { createDataPicked } from '../../utils/CreateDataPicked/index';
 
-function OverviewChart(props) {
+function OverviewLineChart(props) {
   const [cases, setCases] = useState([]);
   const [deaths, setDeaths] = useState([]);
   const [recovered, setRecovered] = useState([]);
@@ -51,22 +51,14 @@ function OverviewChart(props) {
     xField: 'time',
     yField: 'value',
     seriesField: 'category',
-    yAxis: {
-      label: {
-        formatter: function formatter(v) {
-          return ''.concat(v).replace(/\d{1,3}(?=(\d{3})+$)/g, function (s) {
-            return ''.concat(s, ',');
-          });
-        },
-      },
-    },
+    semicolon: false,
     color: ['#1979C9', '#D62A0D', '#33fa19'],
-    legend: { position: 'top' },
+    legend: { position: 'bottom' },
     smooth: true,
     animation: {
       appear: {
         animation: 'path-in',
-        duration: 1000,
+        duration: 5000,
       },
     },
   };
@@ -79,22 +71,26 @@ function OverviewChart(props) {
   };
 
   return (
-    <div className="overviewchart">
-      <>
+    <div className="overviewlinechart">
+      <div>
         <p>
-          World overview chart from {startDate ? startDate : '1/22/20'} to{' '}
+          Diễn biến dịch covid trên thế giới từ&nbsp;
+          {startDate ? startDate : '1/22/20'} đến&nbsp;
           {endDate ? endDate : cases[cases.length - 1]?.time}
         </p>
-
         <RangePicker
+          className="rangepicker"
           format="MM-DD-YY"
-          placeholder={['Start Date', 'End Date']}
+          placeholder={[
+            '1/22/20',
+            endDate ? endDate : cases[cases.length - 1]?.time,
+          ]}
           onChange={handleDatePicker}
         />
-      </>
-      <Line {...config} />;
+      </div>
+      <Line className="linechart" {...config} />
     </div>
   );
 }
 
-export default OverviewChart;
+export default OverviewLineChart;

@@ -41,7 +41,9 @@
 
 /* Manual CSS */
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
 * {
-  font-family: 'Ropa Sans', Impact, sans-serif;
   box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
 }

@@ -3,7 +3,7 @@ const formatCases = (cases) => {
     const arrayElement = element;
     const [time, value, category] = arrayElement;
     const objectElement = { time, value, category };
-    objectElement.category = 'cases';
+    objectElement.category = 'Ca nhiễm';
     return objectElement;
   });
 };
@@ -13,7 +13,7 @@ const formatDeaths = (deaths) => {
     const arrayElement = element;
     const [time, value, category] = arrayElement;
     const objectElement = { time, value, category };
-    objectElement.category = 'deaths';
+    objectElement.category = 'Tử vong';
     return objectElement;
   });
 };
@@ -23,7 +23,7 @@ const formatRecovered = (recovered) => {
     const arrayElement = element;
     const [time, value, category] = arrayElement;
     const objectElement = { time, value, category };
-    objectElement.category = 'recovered';
+    objectElement.category = 'Đã khỏi';
     return objectElement;
   });
 };

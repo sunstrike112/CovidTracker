@@ -1,8 +1,7 @@
 const createDataPicked = (startDate, endDate, cases, deaths, recovered) => {
-  let indexDatePicked = [];
-  let casesFiltered = [];
-  let deathsFiltered = [];
-  let recoveredFiltered = [];
+  let blankArray = [[], [], [], []];
+  let [indexDatePicked, casesFiltered, deathsFiltered, recoveredFiltered] =
+    blankArray;
   if (startDate !== '' && endDate !== '') {
     indexDatePicked.push(
       cases?.findIndex((element) => element.time == startDate),

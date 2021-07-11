@@ -1,14 +1,14 @@
 import React from 'react';
 
 import OverviewMap from '../../components/OverviewMap';
-import OverviewChart from '../../components/OverviewChart';
+import OverviewLineChart from '../../components/OverviewLineChart';
 import './Home.scss';
 
 function Home(props) {
   return (
     <div className="home">
       <OverviewMap />
-      <OverviewChart />
+      <OverviewLineChart />
     </div>
   );
 }
