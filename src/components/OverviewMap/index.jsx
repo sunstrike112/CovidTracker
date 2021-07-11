@@ -14,7 +14,7 @@ mapboxgl.accessToken = `pk.eyJ1Ijoic3Vuc3RyaWtlMTEyIiwiYSI6ImNrcXV4OTY2djA2bDIyd
 function OverviewMap() {
   const covidMap = useRef(null);
 
-  const fetcher = (url) =>
+  const getDataMap = (url) =>
     fetch(url)
       .then((response) => response.json())
       .then((data) =>
@@ -37,7 +37,7 @@ function OverviewMap() {
           },
         }))
       );
-  const { data } = useSWR('https://disease.sh/v3/covid-19/jhucsse', fetcher);
+  const { data } = useSWR('https://disease.sh/v3/covid-19/jhucsse', getDataMap);
 
   useEffect(() => {
     if (data) {

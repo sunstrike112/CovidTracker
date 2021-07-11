@@ -1,7 +1,9 @@
-import React, { useState, useLayoutEffect, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Line, Column } from '@ant-design/charts';
+import { DatePicker } from 'antd';
 import axios from 'axios';
+import 'antd/dist/antd.css';
 
 import './OverviewChart.scss';
 import {
@@ -9,15 +11,27 @@ import {
   formatDeaths,
   formatRecovered,
 } from '../../utils/FormatData/index';
+import { createDataPicked } from '../../utils/CreateDataPicked/index';
 
 function OverviewChart(props) {
   const [cases, setCases] = useState([]);
   const [deaths, setDeaths] = useState([]);
   const [recovered, setRecovered] = useState([]);
-  let data = cases.concat(deaths, recovered);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const { RangePicker } = DatePicker;
+  let dataFull = cases.concat(deaths, recovered);
+  let dataFiltered = createDataPicked(
+    startDate,
+    endDate,
+    cases,
+    deaths,
+    recovered
+  );
+  let dataChart = startDate !== '' ? dataFiltered : dataFull;
 
   useEffect(() => {
-    const handleDataChart = () => {
+    const getCovidData = () => {
       axios
         .get(`https://disease.sh/v3/covid-19/historical/all?lastdays=all`)
         .then((response) => {
@@ -29,11 +43,11 @@ function OverviewChart(props) {
           alert(`Request to API failed, Please try again !!!`);
         });
     };
-    handleDataChart();
+    getCovidData();
   }, []);
 
   const config = {
-    data,
+    data: dataChart,
     xField: 'time',
     yField: 'value',
     seriesField: 'category',
@@ -57,9 +71,27 @@ function OverviewChart(props) {
     },
   };
 
+  const handleDatePicker = (monent, date) => {
+    if (date) {
+      setStartDate(date[0].replace(/(^|-)0+/g, '$1').replace(/-/g, '/'));
+      setEndDate(date[1].replace(/(^|-)0+/g, '$1').replace(/-/g, '/'));
+    }
+  };
+
   return (
     <div className="overviewchart">
-      <h2>World overview chart</h2>
+      <>
+        <p>
+          World overview chart from {startDate ? startDate : '1/22/20'} to{' '}
+          {endDate ? endDate : cases[cases.length - 1]?.time}
+        </p>
+
+        <RangePicker
+          format="MM-DD-YY"
+          placeholder={['Start Date', 'End Date']}
+          onChange={handleDatePicker}
+        />
+      </>
       <Line {...config} />;
     </div>
   );
