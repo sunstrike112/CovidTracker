@@ -1,0 +1,111 @@
+.overviewcard {
+  width: 80vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 3px solid black;
+  padding: 10px;
+  @media screen and (min-width: 376px) {
+    flex-direction: row;
+    align-items: baseline;
+  }
+
+  .ant-card {
+    width: 90%;
+    margin: 10px 0;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-align: center;
+    @media screen and (min-width: 376px) {
+      width: 25%;
+      height: 250px;
+      font-size: 1rem;
+    }
+    @media screen and (min-width: 769px) {
+      font-size: 1.3rem;
+    }
+
+    .ant-card-head {
+      font-weight: bold;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 0;
+      > .ant-card-head-wrapper {
+        > .ant-card-head-title {
+          width: 100%;
+          font-size: 1.4rem;
+          position: relative;
+          @media screen and (min-width: 769px) {
+            font-size: 1.7rem;
+          }
+        }
+        > .ant-card-head-title:before {
+          content: '';
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          border-radius: inherit;
+          background-color: currentColor;
+          opacity: 0.2;
+        }
+      }
+    }
+
+    .ant-card-body {
+      padding: 20px 0 0 0;
+      p {
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      > p:nth-child(1) {
+        font-size: 2rem;
+        @media screen and (min-width: 376px) {
+          font-size: 1.45rem;
+        }
+        @media screen and (min-width: 1023px) {
+          font-size: 1.8rem;
+        }
+      }
+      > p:nth-child(2) {
+        font-size: 1.2rem;
+        line-height: 1.25rem;
+        @media screen and (min-width: 1023px) {
+          font-size: 1.5rem;
+        }
+      }
+      > p:nth-child(3) {
+        font-size: 1rem;
+        @media screen and (min-width: 1023px) {
+          font-size: 1.2rem;
+        }
+      }
+      p {
+        span {
+          font-size: 1rem;
+          font-weight: normal;
+        }
+      }
+    }
+  }
+}
+
+@mixin color($i) {
+  @if ($i == 1) {
+    color: blue;
+  } @else if ($i == 2) {
+    color: red;
+  } @else if ($i == 3) {
+    color: rgb(95, 95, 23);
+  } @else {
+    color: green;
+  }
+}
+
+@for $i from 1 through 4 {
+  .ant-card:nth-child(#{$i}) .ant-card-head > .ant-card-head-wrapper {
+    @include color($i);
+  }
+}

@@ -3,6 +3,14 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 100vw;
-  height: 100vh;
+  border-right: black solid 3px;
+  border-left: black solid 3px;
+  padding: 0;
+  margin: 0 20px;
+  @media screen and (min-width: 376px) {
+    margin: 0 50px;
+  }
+  @media screen and (min-width: 769px) {
+    margin: 0 80px;
+  }
 }

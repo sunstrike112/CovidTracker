@@ -6,14 +6,15 @@ import lookup from 'country-code-lookup';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import './OverviewMap.scss';
-import axios from 'axios';
+import { getIso } from '../../utils/GetIso/index';
+import { createPopup } from '../../utils/CreatePopup/index';
 
 mapboxgl.accessToken = `pk.eyJ1Ijoic3Vuc3RyaWtlMTEyIiwiYSI6ImNrcXV4OTY2djA2bDIydXBjNHZobTBtbzMifQ.BYCyLBgyOMbG7eycxXX_6A`;
 
 function OverviewMap() {
-  const mapboxElRef = useRef(null);
+  const covidMap = useRef(null);
 
-  const fetcher = (url) =>
+  const getDataMap = (url) =>
     fetch(url)
       .then((response) => response.json())
       .then((data) =>
@@ -36,20 +37,24 @@ function OverviewMap() {
           },
         }))
       );
-  const { data } = useSWR('https://disease.sh/v3/covid-19/jhucsse', fetcher);
+  const { data } = useSWR('https://disease.sh/v3/covid-19/jhucsse', getDataMap);
 
   useEffect(() => {
     if (data) {
       const map = new mapboxgl.Map({
-        container: mapboxElRef.current,
+        container: covidMap.current,
         style: 'mapbox://styles/notalemesa/ck8dqwdum09ju1ioj65e3ql3k',
         center: [110, 15],
-        zoom: 3,
+        zoom: 4,
+      });
+      const popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false,
       });
 
       map.addControl(new mapboxgl.NavigationControl());
-
       map.once('load', function () {
+        map.resize();
         map.addSource('points', {
           type: 'geojson',
           data: {
@@ -62,7 +67,7 @@ function OverviewMap() {
           source: 'points',
           type: 'circle',
           paint: {
-            'circle-opacity': 0.9,
+            'circle-opacity': 0.5,
             'circle-stroke-width': [
               'interpolate',
               ['linear'],
@@ -84,18 +89,20 @@ function OverviewMap() {
               'interpolate',
               ['linear'],
               ['get', 'cases'],
+              1,
               6,
+              1000,
               6,
-              5000,
+              50000,
               6,
-              10000,
-              6,
-              25000,
-              6,
-              75000,
-              6,
-              100000,
-              6,
+              150000,
+              8,
+              200000,
+              10,
+              500000,
+              12,
+              1000000,
+              16,
             ],
             'circle-color': [
               'interpolate',
@@ -103,71 +110,48 @@ function OverviewMap() {
               ['get', 'cases'],
               1,
               '#ffffb2',
-              5000,
+              1000,
               '#fed976',
-              10000,
-              '#feb24c',
-              25000,
-              '#fd8d3c',
               50000,
-              '#fc4e2a',
+              '#feb24c',
               75000,
+              '#fd8d3c',
+              150000,
+              '#fc4e2a',
+              200000,
               '#e31a1c',
-              100000,
+              500000,
               '#b10026',
+              1000000,
+              '#36030e',
             ],
           },
         });
 
-        const popup = new mapboxgl.Popup({
-          closeButton: false,
-          closeOnClick: false,
-        });
-
-        let lastId;
-
-        map.on('mousemove', 'circles', (e) => {
-          const id = e.features[0].properties.id;
-          if (id !== lastId) {
-            lastId = id;
-            const { cases, deaths, recovered, country, province } =
-              e.features[0].properties;
-            map.getCanvas().style.cursor = 'pointer';
-            const coordinates = e.features[0].geometry.coordinates.slice();
-            let countryISO =
-              lookup.byCountry(country)?.iso2.toLowerCase() ||
-              lookup.byInternet(country)?.iso2.toLowerCase();
-            if (country == 'Burma') countryISO = 'mm';
-            if (country == 'Korea, South') countryISO = 'kr';
-            if (country == 'Taiwan*') countryISO = 'tw';
-            if (
-              country == 'Congo (Brazzaville)' ||
-              country == 'Congo (Kinshasa)'
-            )
-              countryISO = 'cg';
-            const provinceHTML =
-              province !== 'null' ? `<p>Province: <b>${province}</b></p>` : '';
-            const countryFlagHTML = Boolean(countryISO)
-              ? `<img src="https://www.countryflags.io/${countryISO}/flat/64.png"></img>`
-              : '';
-            const popUp = `
-              <p>Country: <b>${country}</b></p>
-              ${provinceHTML}
-              <p>Cases: <b>${cases}</b></p>
-              <p>Deaths: <b>${deaths}</b></p>
-              <p>Recovered: <b>${recovered}</b></p>
-              ${countryFlagHTML}`;
-
-            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-              coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-            }
-
-            popup.setLngLat(coordinates).setHTML(popUp).addTo(map);
+        map.on('mousemove', 'circles', (position) => {
+          const { cases, deaths, recovered, country, province } =
+            position.features[0].properties;
+          map.getCanvas().style.cursor = 'pointer';
+          const coordinates = position.features[0].geometry.coordinates.slice();
+          while (Math.abs(position.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += position.lngLat.lng > coordinates[0] ? 360 : -360;
           }
+          popup
+            .setLngLat(coordinates)
+            .setHTML(
+              createPopup(
+                cases,
+                deaths,
+                recovered,
+                country,
+                province,
+                getIso(country)
+              )
+            )
+            .addTo(map);
         });
 
         map.on('mouseleave', 'circles', function () {
-          lastId = undefined;
           map.getCanvas().style.cursor = '';
           popup.remove();
         });
@@ -176,11 +160,10 @@ function OverviewMap() {
   }, [data]);
 
   return (
-    <div className="overviewMap">
-      <div className="mapContainer">
-        <div className="mapBox" ref={mapboxElRef} />
-      </div>
-    </div>
+    <>
+      <p className="title">Phân bố dịch covid trên thế giới</p>
+      <div className="overviewMap" ref={covidMap}></div>
+    </>
   );
 }
 
