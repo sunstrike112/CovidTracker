@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import { Line } from '@ant-design/charts';
 import { DatePicker } from 'antd';
-import axios from 'axios';
 import 'antd/dist/antd.css';
+import axios from 'axios';
 
 import './OverviewLineChart.scss';
 import {
@@ -53,7 +53,7 @@ function OverviewLineChart(props) {
     seriesField: 'category',
     semicolon: false,
     color: ['#1979C9', '#D62A0D', '#33fa19'],
-    legend: { position: 'bottom' },
+    legend: { position: 'top' },
     smooth: true,
     animation: {
       appear: {

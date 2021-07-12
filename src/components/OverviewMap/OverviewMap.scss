@@ -1,7 +1,6 @@
 .mapboxgl-map {
   width: 80vw;
   height: 400px;
-  margin-top: 50px;
   @media screen and (min-width: 376px) {
     height: 700px;
   }
@@ -51,5 +50,18 @@
     height: 3rem;
     margin-left: auto;
     margin-right: auto;
+  }
+}
+
+.home {
+  > p.title {
+    font-weight: bold;
+    letter-spacing: 1px;
+    font-size: 1rem;
+    padding: 0;
+    margin: 10px 0;
+    @media screen and (min-width: 376px) {
+      font-size: 1.5rem;
+    }
   }
 }

@@ -159,7 +159,12 @@ function OverviewMap() {
     }
   }, [data]);
 
-  return <div className="overviewMap" ref={covidMap}></div>;
+  return (
+    <>
+      <p className="title">Phân bố dịch covid trên thế giới</p>
+      <div className="overviewMap" ref={covidMap}></div>
+    </>
+  );
 }
 
 export default OverviewMap;

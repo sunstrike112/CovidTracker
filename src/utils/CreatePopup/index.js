@@ -1,3 +1,5 @@
+import { formatNumber } from '../FormatNumber';
+
 const createPopup = (
   cases,
   deaths,
@@ -14,9 +16,9 @@ const createPopup = (
   const popUp = `
       <p>Quốc gia: <b>${country}</b></p>
       ${provinceHTML}
-      <p>Nhiếm bệnh: <b>${cases}</b></p>
-      <p>Tử vong: <b>${deaths}</b></p>
-      <p>Đã khỏi: <b>${recovered}</b></p>
+      <p>Nhiếm bệnh: <b>${formatNumber(cases)}</b></p>
+      <p>Tử vong: <b>${formatNumber(deaths)}</b></p>
+      <p>Đã khỏi: <b>${formatNumber(recovered)}</b></p>
       ${countryFlagHTML}
     `;
   return popUp;
