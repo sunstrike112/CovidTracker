@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
 import { Line } from '@ant-design/charts';
-import { DatePicker } from 'antd';
+import { DatePicker, Skeleton } from 'antd';
 import 'antd/dist/antd.css';
 import axios from 'axios';
+import _ from 'lodash';
 
 import './OverviewLineChart.scss';
 import {
@@ -43,6 +44,7 @@ function OverviewLineChart(props) {
           alert(`Request to API failed, Please try again !!!`);
         });
     };
+
     getCovidData();
   }, []);
 
@@ -50,6 +52,7 @@ function OverviewLineChart(props) {
     data: dataChart,
     xField: 'time',
     yField: 'value',
+    height: 500,
     seriesField: 'category',
     semicolon: false,
     color: ['#1979C9', '#D62A0D', '#33fa19'],
@@ -71,25 +74,33 @@ function OverviewLineChart(props) {
   };
 
   return (
-    <div className="overviewlinechart">
-      <div>
-        <p>
-          Diễn biến dịch covid trên thế giới từ&nbsp;
-          {startDate ? startDate : '1/22/20'} đến&nbsp;
-          {endDate ? endDate : cases[cases.length - 1]?.time}
-        </p>
-        <RangePicker
-          className="rangepicker"
-          format="MM-DD-YY"
-          placeholder={[
-            '1/22/20',
-            endDate ? endDate : cases[cases.length - 1]?.time,
-          ]}
-          onChange={handleDatePicker}
-        />
+    <>
+      <div className="overviewlinechart">
+        <>
+          <p>
+            Diễn biến dịch covid trên thế giới từ&nbsp;
+            {startDate ? startDate : '1/22/20'} đến&nbsp;
+            {endDate ? endDate : cases[cases.length - 1]?.time}
+          </p>
+          <RangePicker
+            className="rangepicker"
+            format="MM-DD-YY"
+            placeholder={[
+              '1/22/20',
+              endDate ? endDate : cases[cases.length - 1]?.time,
+            ]}
+            onChange={handleDatePicker}
+          />
+        </>
+        {_.isEmpty(recovered) ? (
+          <Skeleton className="lineskeleton" paragraph={{ rows: 10 }} active />
+        ) : (
+          <div className="linechart">
+            <Line className="linechart" {...config} />
+          </div>
+        )}
       </div>
-      <Line className="linechart" {...config} />
-    </div>
+    </>
   );
 }
 

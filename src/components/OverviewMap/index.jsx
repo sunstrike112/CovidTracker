@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 
+import { Skeleton } from 'antd';
 import mapboxgl from 'mapbox-gl';
 import useSWR from 'swr';
-import lookup from 'country-code-lookup';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import './OverviewMap.scss';
@@ -13,6 +13,7 @@ mapboxgl.accessToken = `pk.eyJ1Ijoic3Vuc3RyaWtlMTEyIiwiYSI6ImNrcXV4OTY2djA2bDIyd
 
 function OverviewMap() {
   const covidMap = useRef(null);
+  const [loadMap, setLoadMap] = useState(true);
 
   const getDataMap = (url) =>
     fetch(url)
@@ -41,11 +42,12 @@ function OverviewMap() {
 
   useEffect(() => {
     if (data) {
+      console.log(loadMap);
       const map = new mapboxgl.Map({
         container: covidMap.current,
         style: 'mapbox://styles/notalemesa/ck8dqwdum09ju1ioj65e3ql3k',
         center: [110, 15],
-        zoom: 4,
+        zoom: 3,
       });
       const popup = new mapboxgl.Popup({
         closeButton: false,
@@ -160,10 +162,9 @@ function OverviewMap() {
   }, [data]);
 
   return (
-    <>
-      <p className="title">Phân bố dịch covid trên thế giới</p>
-      <div className="overviewMap" ref={covidMap}></div>
-    </>
+    <div className="overviewmap">
+      <div ref={covidMap}></div>
+    </div>
   );
 }
 

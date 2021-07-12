@@ -1,14 +1,21 @@
-.mapboxgl-map {
-  width: 80vw;
-  height: 400px;
+.overviewmap {
+  width: 90vw;
+  height: 90vh;
+  margin-bottom: 1rem;
   @media screen and (min-width: 376px) {
-    height: 700px;
+    width: 95vw;
+    height: 95vh;
+    margin-bottom: 4rem;
   }
 }
-
-.mapboxgl-canvas {
-  height: 100%;
-  border: 5px solid black;
+.mapboxgl-map {
+  height: 700px;
+  border-radius: 20px;
+  margin: 2rem 0;
+  box-shadow: rgba(42, 25, 104, 0.35) 0px 5px 10px 5px;
+  @media screen and (min-width: 376px) {
+    height: 100%;
+  }
 }
 
 .mapboxgl-popup {
@@ -50,18 +57,5 @@
     height: 3rem;
     margin-left: auto;
     margin-right: auto;
-  }
-}
-
-.home {
-  > p.title {
-    font-weight: bold;
-    letter-spacing: 1px;
-    font-size: 1rem;
-    padding: 0;
-    margin: 10px 0;
-    @media screen and (min-width: 376px) {
-      font-size: 1.5rem;
-    }
   }
 }

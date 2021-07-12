@@ -1,14 +1,20 @@
 .overviewlinechart {
   padding: 20px;
   position: relative;
-  width: 80vw;
+  width: 95vw;
   height: 100%;
-  border: 3px solid black;
-  font-size: 1rem;
+  border-radius: 20px;
   letter-spacing: 1px;
   font-weight: bold;
+  margin: 30px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1em;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   @media screen and (min-width: 376px) {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
 
   div:nth-child(1) {
@@ -25,14 +31,65 @@
       width: 35%;
     }
   }
+  canvas {
+    padding: 0px;
+  }
+}
 
-  .linechart {
-    letter-spacing: 0;
-
-    div:nth-child(1) {
-      .g2-tool-tip {
-        font-size: 4rem;
+.ant-picker {
+  border-radius: 10px;
+  font-size: 0.8rem;
+  color: black;
+  padding: 3px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 1px 8px;
+  @media screen and (min-width: 376px) {
+    padding: 6px;
+    font-size: 1.2rem;
+  }
+  @media screen and (min-width: 769px) {
+    font-size: 1.5rem;
+  }
+  &:hover {
+    border: black solid 1px;
+  }
+  > .ant-picker-input {
+    > input {
+      text-align: center;
+      letter-spacing: 4px;
+      &::placeholder {
+        color: black;
+        font-weight: bold;
       }
     }
+  }
+  > .ant-picker-range-separator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    * svg {
+      color: black;
+    }
+  }
+  > * {
+    color: black;
+  }
+}
+
+.lineskeleton {
+  .ant-skeleton-content {
+    .ant-skeleton-paragraph {
+      > li {
+        width: 70vw;
+      }
+    }
+  }
+}
+
+.linechart {
+  height: 9rem;
+  width: 95%;
+  @media screen and (min-width: 376px) {
+    height: 500px;
   }
 }
