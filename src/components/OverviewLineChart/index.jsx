@@ -96,7 +96,6 @@ function OverviewLineChart(props) {
           ]}
           onChange={handleDatePicker}
         />
-
         {_.isEmpty(recovered) ? (
           <Skeleton className="lineskeleton" paragraph={{ rows: 10 }} active />
         ) : (
