@@ -1,16 +1,12 @@
 .overviewlinechart {
   padding: 20px;
-  position: relative;
+  // position: relative;
   width: 95vw;
   height: 100%;
   border-radius: 20px;
   letter-spacing: 1px;
   font-weight: bold;
   margin: 30px 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
   font-size: 1em;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   @media screen and (min-width: 376px) {
@@ -25,7 +21,7 @@
     margin-bottom: 20px;
     width: 80%;
     @media screen and (min-width: 376px) {
-      width: 35%;
+      width: 20%;
     }
   }
 }
@@ -95,9 +91,6 @@
 }
 
 .linechart {
-  height: 9rem;
-  width: 90%;
-  @media screen and (min-width: 376px) {
-    height: 500px;
-  }
+  padding: 20px;
+  font-size: 0.4rem;
 }

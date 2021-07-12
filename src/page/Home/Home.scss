@@ -4,15 +4,4 @@
   justify-content: center;
   flex-direction: column;
   padding: 0;
-  @media screen and (min-width: 376px) {
-    margin: 0 50px;
-  }
-  @media screen and (min-width: 769px) {
-    padding: 0 10px;
-    margin: 0 70px;
-  }
-  @media screen and (min-width: 1025px) {
-    margin: 0 100px;
-    padding: 2rem;
-  }
 }

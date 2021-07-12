@@ -30,6 +30,7 @@ function OverviewLineChart(props) {
     recovered
   );
   let dataChart = startDate !== '' ? dataFiltered : dataFull;
+  console.log(dataFull);
 
   useEffect(() => {
     const getCovidData = () => {
@@ -52,9 +53,14 @@ function OverviewLineChart(props) {
     data: dataChart,
     xField: 'time',
     yField: 'value',
-    height: 500,
     seriesField: 'category',
-    semicolon: false,
+    yAxis: {
+      label: {
+        formatter: function formatter(v) {
+          return ''.concat((v / 1000000).toFixed(0), 'M');
+        },
+      },
+    },
     color: ['#1979C9', '#D62A0D', '#33fa19'],
     legend: { position: 'top' },
     smooth: true,
@@ -76,28 +82,25 @@ function OverviewLineChart(props) {
   return (
     <>
       <div className="overviewlinechart">
-        <>
-          <p>
-            Diễn biến dịch covid trên thế giới từ&nbsp;
-            {startDate ? startDate : '1/22/20'} đến&nbsp;
-            {endDate ? endDate : cases[cases.length - 1]?.time}
-          </p>
-          <RangePicker
-            className="rangepicker"
-            format="MM-DD-YY"
-            placeholder={[
-              '1/22/20',
-              endDate ? endDate : cases[cases.length - 1]?.time,
-            ]}
-            onChange={handleDatePicker}
-          />
-        </>
+        <p>
+          Diễn biến dịch covid trên thế giới từ&nbsp;
+          {startDate ? startDate : '1/22/20'} đến&nbsp;
+          {endDate ? endDate : cases[cases.length - 1]?.time}
+        </p>
+        <RangePicker
+          className="rangepicker"
+          format="MM-DD-YY"
+          placeholder={[
+            '1/22/20',
+            endDate ? endDate : cases[cases.length - 1]?.time,
+          ]}
+          onChange={handleDatePicker}
+        />
+
         {_.isEmpty(recovered) ? (
           <Skeleton className="lineskeleton" paragraph={{ rows: 10 }} active />
         ) : (
-          <div className="linechart">
-            <Line className="linechart" {...config} />
-          </div>
+          <Line className="linechart" {...config} />
         )}
       </div>
     </>
