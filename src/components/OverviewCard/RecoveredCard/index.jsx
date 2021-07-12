@@ -17,7 +17,7 @@ function RecoveredCard(props) {
     setTodayRecovered(formatNumber(covidData.todayRecovered));
     setRecoveredPerMillion(formatNumber(covidData.recoveredPerOneMillion));
   }, [covidData]);
-  console.log(covidData);
+
   return (
     <Card title="Đã khỏi">
       {!_.isEmpty(covidData) ? (

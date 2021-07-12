@@ -13,7 +13,6 @@ mapboxgl.accessToken = `pk.eyJ1Ijoic3Vuc3RyaWtlMTEyIiwiYSI6ImNrcXV4OTY2djA2bDIyd
 
 function OverviewMap() {
   const covidMap = useRef(null);
-  const [loadMap, setLoadMap] = useState(true);
 
   const getDataMap = (url) =>
     fetch(url)
@@ -42,7 +41,6 @@ function OverviewMap() {
 
   useEffect(() => {
     if (data) {
-      console.log(loadMap);
       const map = new mapboxgl.Map({
         container: covidMap.current,
         style: 'mapbox://styles/notalemesa/ck8dqwdum09ju1ioj65e3ql3k',

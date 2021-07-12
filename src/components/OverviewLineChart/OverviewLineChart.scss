@@ -14,15 +14,12 @@
   font-size: 1em;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   @media screen and (min-width: 376px) {
+    font-size: 1.2rem;
+  }
+  @media screen and (min-width: 1025px) {
     font-size: 2rem;
   }
 
-  div:nth-child(1) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-  }
   .rangepicker {
     align-self: flex-end;
     margin-bottom: 20px;
@@ -30,9 +27,6 @@
     @media screen and (min-width: 376px) {
       width: 35%;
     }
-  }
-  canvas {
-    padding: 0px;
   }
 }
 
@@ -77,10 +71,24 @@
 }
 
 .lineskeleton {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  width: 95vw;
+  border-radius: 15px;
   .ant-skeleton-content {
+    .ant-skeleton-title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin-left: 4rem;
+    }
     .ant-skeleton-paragraph {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
       > li {
-        width: 70vw;
+        width: 90%;
       }
     }
   }
@@ -88,7 +96,7 @@
 
 .linechart {
   height: 9rem;
-  width: 95%;
+  width: 90%;
   @media screen and (min-width: 376px) {
     height: 500px;
   }

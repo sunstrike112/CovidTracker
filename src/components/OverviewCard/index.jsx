@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import { Skeleton } from 'antd';
 import 'antd/dist/antd.css';
 import axios from 'axios';
 
@@ -31,8 +30,6 @@ function OverviewCard(props) {
     };
     handleCovidData();
   }, []);
-
-  console.log(covidData);
 
   return (
     <>
