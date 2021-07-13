@@ -27,25 +27,28 @@ function Header(props) {
   };
 
   return (
-    <nav className={isVisible ? 'active NavbarItems' : 'hidden NavbarItems'}>
-      <h1 className="navbar-logo">
-        React<i className="fab fa-react"></i>
-      </h1>
+    <nav className={isVisible ? 'active header' : 'hidden header'}>
+      <h1 className="navbar-logo">Covid Tracker</h1>
+      <div className="navbar">
+        <div>
+          <button>Overview</button>
+          <button>Country</button>
+          <button>News</button>
+          <button>Log out</button>
+        </div>
+      </div>
       <div className="menu-icon" onClick={handleCollapseNavbar}>
-        <i className={isCollapsed ? 'fas fa-times' : 'fas fa-bars'}></i>
+        <i className={isCollapsed ? 'fas fa-bars' : 'fas fa-bars'}></i>
       </div>
       <ul className={isCollapsed ? 'nav-menu activecollapse' : 'nav-menu'}>
-        {NavbarItems.map((item, index) => {
-          return (
-            <li key={index}>
-              <a className={item.cName} href={item.url}>
-                {item.title}
-              </a>
-            </li>
-          );
-        })}
+        <li>Hi admin</li>
+        <li>Overview</li>
+        <li>Country</li>
+        <li>News</li>
+        <li>
+          <button>Log out</button>
+        </li>
       </ul>
-      <button>Sign Up</button>
     </nav>
   );
 }
