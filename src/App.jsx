@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import './App.css';
 import GlobalLoading from './components/GlobalLoading';
-import SignIn from './page/SignIn';
-import NotFound from './page/NotFound/index';
+import SignIn from './pages/SignIn';
+import NotFound from './pages/NotFound/index';
 import AuthRoute from './router/AuthRoute/AuthRoute';
 import PrivateRoute from './router/PrivateRoute/PrivateRoute';
 import Home from './pages/Home';
