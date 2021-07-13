@@ -7,7 +7,7 @@ import SignIn from './page/SignIn';
 import NotFound from './page/NotFound/index';
 import AuthRoute from './router/AuthRoute/AuthRoute';
 import PrivateRoute from './router/PrivateRoute/PrivateRoute';
-import Home from './page/Home';
+import Home from './pages/Home';
 
 function App() {
   return (
