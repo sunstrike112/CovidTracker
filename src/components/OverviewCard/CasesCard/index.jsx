@@ -3,8 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, Skeleton } from 'antd';
 import 'antd/dist/antd.css';
 import _ from 'lodash';
-
-import { formatNumber } from '../../../utils/FormatNumber/index';
+import numeral from 'numeral';
 
 function CasesCard(props) {
   const { covidData } = props;
@@ -13,9 +12,9 @@ function CasesCard(props) {
   const [casesPerMillion, setCasesPerMillion] = useState(0);
 
   useEffect(() => {
-    setCases(formatNumber(covidData?.cases));
-    setTodayCases(formatNumber(covidData?.todayCases));
-    setCasesPerMillion(formatNumber(covidData?.casesPerOneMillion));
+    setCases(numeral(covidData.cases).format('0.0a'));
+    setTodayCases(numeral(covidData.todayCases).format('0.0a'));
+    setCasesPerMillion(numeral(covidData.casesPerOneMillion).format('0.0a'));
   }, [covidData]);
 
   return (

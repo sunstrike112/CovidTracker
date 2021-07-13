@@ -4,4 +4,10 @@
   justify-content: center;
   flex-direction: column;
   padding: 0;
+  .ant-layout-header {
+    background-color: white;
+  }
+  @media screen and (min-width: 769px) {
+    margin-top: 5rem;
+  }
 }
