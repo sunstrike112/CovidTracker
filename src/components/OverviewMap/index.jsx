@@ -6,8 +6,11 @@ import useSWR from 'swr';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import './OverviewMap.scss';
-import { getIso } from '../../utils/GetIso/index';
-import { createPopup } from '../../utils/CreatePopup/index';
+import {
+  configMap,
+  declareMap,
+  declarePopup,
+} from '../../utils/ConfigMap/index';
 
 mapboxgl.accessToken = `pk.eyJ1Ijoic3Vuc3RyaWtlMTEyIiwiYSI6ImNrcXV4OTY2djA2bDIydXBjNHZobTBtbzMifQ.BYCyLBgyOMbG7eycxXX_6A`;
 
@@ -42,123 +45,12 @@ function OverviewMap() {
   useEffect(() => {
     setTimeout(() => {
       if (data) {
-        const map = new mapboxgl.Map({
-          container: covidMap.current,
-          style: 'mapbox://styles/notalemesa/ck8dqwdum09ju1ioj65e3ql3k',
-          center: [110, 15],
-          zoom: 3,
-        });
-        const popup = new mapboxgl.Popup({
-          closeButton: false,
-          closeOnClick: false,
-        });
-        map.addControl(new mapboxgl.NavigationControl());
-        map.once('load', function () {
-          map.resize();
-          map.addSource('points', {
-            type: 'geojson',
-            data: {
-              type: 'FeatureCollection',
-              features: data,
-            },
-          });
-          map.addLayer({
-            id: 'circles',
-            source: 'points',
-            type: 'circle',
-            paint: {
-              'circle-opacity': 0.5,
-              'circle-stroke-width': [
-                'interpolate',
-                ['linear'],
-                ['get', 'cases'],
-                1,
-                1,
-                1000,
-                1.25,
-                4000,
-                1.5,
-                8000,
-                1.75,
-                12000,
-                2,
-                100000,
-                2.5,
-              ],
-              'circle-radius': [
-                'interpolate',
-                ['linear'],
-                ['get', 'cases'],
-                1,
-                6,
-                1000,
-                6,
-                50000,
-                6,
-                150000,
-                8,
-                200000,
-                10,
-                500000,
-                12,
-                1000000,
-                16,
-              ],
-              'circle-color': [
-                'interpolate',
-                ['linear'],
-                ['get', 'cases'],
-                1,
-                '#ffffb2',
-                1000,
-                '#fed976',
-                50000,
-                '#feb24c',
-                75000,
-                '#fd8d3c',
-                150000,
-                '#fc4e2a',
-                200000,
-                '#e31a1c',
-                500000,
-                '#b10026',
-                1000000,
-                '#36030e',
-              ],
-            },
-          });
-          map.on('mousemove', 'circles', (position) => {
-            const { cases, deaths, recovered, country, province } =
-              position.features[0].properties;
-            map.getCanvas().style.cursor = 'pointer';
-            const coordinates =
-              position.features[0].geometry.coordinates.slice();
-            while (Math.abs(position.lngLat.lng - coordinates[0]) > 180) {
-              coordinates[0] +=
-                position.lngLat.lng > coordinates[0] ? 360 : -360;
-            }
-            popup
-              .setLngLat(coordinates)
-              .setHTML(
-                createPopup(
-                  cases,
-                  deaths,
-                  recovered,
-                  country,
-                  province,
-                  getIso(country)
-                )
-              )
-              .addTo(map);
-          });
-          map.on('mouseleave', 'circles', function () {
-            map.getCanvas().style.cursor = '';
-            popup.remove();
-          });
-        });
+        const map = declareMap(covidMap);
+        const popup = declarePopup();
+        configMap(map, popup, data);
       }
       setLoadMap(true);
-    }, 3000);
+    }, 2000);
   }, [data]);
 
   return (
