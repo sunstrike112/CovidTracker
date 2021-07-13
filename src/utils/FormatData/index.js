@@ -1,29 +1,31 @@
+import { formatNumber } from '../FormatNumber';
+
 const formatCases = (cases) => {
   return Object.entries(cases).map((element, key) => {
-    const arrayElement = element;
-    const [time, value, category] = arrayElement;
+    const [time, value, category] = element;
     const objectElement = { time, value, category };
-    objectElement.category = 'Ca nhiễm';
+    objectElement.category = 'Số ca nhiễm';
+    formatNumber(objectElement.value);
     return objectElement;
   });
 };
 
 const formatDeaths = (deaths) => {
   return Object.entries(deaths).map((element, key) => {
-    const arrayElement = element;
-    const [time, value, category] = arrayElement;
+    const [time, value, category] = element;
     const objectElement = { time, value, category };
     objectElement.category = 'Tử vong';
+    formatNumber(objectElement.value);
     return objectElement;
   });
 };
 
 const formatRecovered = (recovered) => {
   return Object.entries(recovered).map((element, key) => {
-    const arrayElement = element;
-    const [time, value, category] = arrayElement;
+    const [time, value, category] = element;
     const objectElement = { time, value, category };
     objectElement.category = 'Đã khỏi';
+    formatNumber(objectElement.value);
     return objectElement;
   });
 };

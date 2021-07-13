@@ -1,10 +1,9 @@
 .overviewcard {
-  width: 80vw;
+  width: 95vw;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-direction: column;
-  border: 3px solid black;
   padding: 10px;
   @media screen and (min-width: 376px) {
     flex-direction: row;
@@ -14,11 +13,14 @@
   .ant-card {
     width: 90%;
     margin: 10px 0;
+    height: 235px;
     font-size: 0.8rem;
     letter-spacing: 1px;
     text-align: center;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     @media screen and (min-width: 376px) {
-      width: 25%;
+      width: 24%;
       height: 250px;
       font-size: 1rem;
     }
@@ -33,10 +35,12 @@
       padding: 0;
       > .ant-card-head-wrapper {
         > .ant-card-head-title {
+          box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+          border-radius: 20px 20px 0 0;
           width: 100%;
-          font-size: 1.4rem;
+          font-size: 2rem;
           position: relative;
-          @media screen and (min-width: 769px) {
+          @media screen and (min-width: 376px) {
             font-size: 1.7rem;
           }
         }
@@ -55,13 +59,14 @@
     }
 
     .ant-card-body {
-      padding: 20px 0 0 0;
+      padding: 5px 0 0 0;
       p {
         font-weight: bold;
         margin-bottom: 10px;
       }
       > p:nth-child(1) {
         font-size: 2rem;
+
         @media screen and (min-width: 376px) {
           font-size: 1.45rem;
         }
@@ -89,16 +94,27 @@
         }
       }
     }
+    .ant-card-body:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      border-radius: inherit;
+      background-color: currentColor;
+      opacity: 0.2;
+    }
   }
 }
 
 @mixin color($i) {
   @if ($i == 1) {
-    color: blue;
-  } @else if ($i == 2) {
     color: red;
-  } @else if ($i == 3) {
+  } @else if ($i == 2) {
     color: rgb(95, 95, 23);
+  } @else if ($i == 3) {
+    color: blue;
   } @else {
     color: green;
   }
@@ -107,5 +123,31 @@
 @for $i from 1 through 4 {
   .ant-card:nth-child(#{$i}) .ant-card-head > .ant-card-head-wrapper {
     @include color($i);
+  }
+  .ant-card:nth-child(#{$i}) > .ant-card-body > p {
+    @include color($i);
+  }
+}
+
+.cardskeleton {
+  padding: 0px 30px;
+  @media screen and (min-width: 376px) {
+    padding: 0 10px;
+  }
+}
+
+.ant-card {
+  p {
+    animation: appear1;
+    animation-duration: 4s;
+  }
+
+  @keyframes appear1 {
+    from {
+      opacity: 0.1;
+    }
+    to {
+      opacity: 1;
+    }
   }
 }

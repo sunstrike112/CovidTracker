@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
 import { Line } from '@ant-design/charts';
-import { DatePicker } from 'antd';
+import { DatePicker, Skeleton } from 'antd';
 import 'antd/dist/antd.css';
 import axios from 'axios';
+import _ from 'lodash';
 
 import './OverviewLineChart.scss';
 import {
@@ -43,6 +44,7 @@ function OverviewLineChart(props) {
           alert(`Request to API failed, Please try again !!!`);
         });
     };
+
     getCovidData();
   }, []);
 
@@ -51,7 +53,13 @@ function OverviewLineChart(props) {
     xField: 'time',
     yField: 'value',
     seriesField: 'category',
-    semicolon: false,
+    yAxis: {
+      label: {
+        formatter: function formatter(v) {
+          return ''.concat((v / 1000000).toFixed(0), 'M');
+        },
+      },
+    },
     color: ['#1979C9', '#D62A0D', '#33fa19'],
     legend: { position: 'top' },
     smooth: true,
@@ -71,8 +79,8 @@ function OverviewLineChart(props) {
   };
 
   return (
-    <div className="overviewlinechart">
-      <div>
+    <>
+      <div className="overviewlinechart">
         <p>
           Diễn biến dịch covid trên thế giới từ&nbsp;
           {startDate ? startDate : '1/22/20'} đến&nbsp;
@@ -87,9 +95,13 @@ function OverviewLineChart(props) {
           ]}
           onChange={handleDatePicker}
         />
+        {_.isEmpty(recovered) ? (
+          <Skeleton className="lineskeleton" paragraph={{ rows: 10 }} active />
+        ) : (
+          <Line className="linechart" {...config} />
+        )}
       </div>
-      <Line className="linechart" {...config} />
-    </div>
+    </>
   );
 }
 
