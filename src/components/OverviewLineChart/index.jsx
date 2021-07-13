@@ -30,7 +30,6 @@ function OverviewLineChart(props) {
     recovered
   );
   let dataChart = startDate !== '' ? dataFiltered : dataFull;
-  console.log(dataFull);
 
   useEffect(() => {
     const getCovidData = () => {

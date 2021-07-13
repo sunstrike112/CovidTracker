@@ -31,7 +31,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "sh ./deploy-surge.sh"
+    "deploy": "sh ./deploy-surge.sh",
+    "commit": "sh ./commit.sh"
   },
   "eslintConfig": {
     "extends": [
