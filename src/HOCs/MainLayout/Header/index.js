@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 
 import './Header.scss';
-import { NavbarItems } from './NavbarItems';
 
 function Header(props) {
   const [isCollapsed, setIsCollapse] = useState(false);
@@ -28,13 +27,18 @@ function Header(props) {
 
   return (
     <nav className={isVisible ? 'active header' : 'hidden header'}>
-      <h1 className="navbar-logo">Covid Tracker</h1>
+      <h1 className="navbar-logo">
+        nC<i className="fas fa-virus"></i>vid <span>Tracker</span>
+      </h1>
       <div className="navbar">
         <div>
           <button>Overview</button>
           <button>Country</button>
           <button>News</button>
-          <button>Log out</button>
+          <div className="welcome">
+            <div>Hi admin</div>
+            <button id="btn-logout">Log out</button>
+          </div>
         </div>
       </div>
       <div className="menu-icon" onClick={handleCollapseNavbar}>
@@ -45,9 +49,7 @@ function Header(props) {
         <li>Overview</li>
         <li>Country</li>
         <li>News</li>
-        <li>
-          <button>Log out</button>
-        </li>
+        <li>Log out</li>
       </ul>
     </nav>
   );

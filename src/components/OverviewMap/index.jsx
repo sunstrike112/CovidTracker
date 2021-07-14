@@ -40,6 +40,7 @@ function OverviewMap() {
           },
         }))
       );
+
   const { data } = useSWR('https://disease.sh/v3/covid-19/jhucsse', getDataMap);
 
   useEffect(() => {

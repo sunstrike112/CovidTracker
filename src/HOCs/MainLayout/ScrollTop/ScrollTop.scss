@@ -1,0 +1,17 @@
+.scrolltop {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 99;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  background-color: white;
+  cursor: pointer;
+  padding: 8px 10px;
+  border-radius: 10px;
+  box-shadow: black 0px 10px 20px;
+  .fa-arrow-up {
+    color: black;
+  }
+}

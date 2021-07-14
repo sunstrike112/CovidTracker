@@ -17,7 +17,7 @@ function OverviewCard(props) {
       setCovidData(await getCovidData(`https://disease.sh/v3/covid-19/all`));
     };
     handleCovidData();
-  });
+  }, []);
 
   return (
     <>

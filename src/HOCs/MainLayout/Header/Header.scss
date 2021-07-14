@@ -1,8 +1,11 @@
 .header {
   background: linear-gradient(
-    90deg,
-    rgb(110, 94, 254) 0%,
-    rgba(73, 63, 252, 1) 100%
+    to right,
+    #3a3e3f,
+    #9aafb8,
+    #79a4b6,
+    #7e9faa,
+    #064966
   );
   padding: 3rem 0;
   height: 100px;
@@ -39,6 +42,9 @@
       font-size: 3rem;
       margin-right: 20rem;
     }
+    span {
+      font-size: 1.5rem;
+    }
   }
   .menu-icon {
     padding-right: 30px;
@@ -51,14 +57,23 @@
 
   .navbar {
     display: none;
+
     @media screen and (min-width: 376px) {
-      display: inline;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
       div:nth-child(1) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+
         button {
           font-size: 1.3rem;
-          margin-left: 0.5rem;
+          margin-left: 2rem;
           letter-spacing: 1px;
-          background-color: blue;
+          background: inherit;
           border: none;
           color: white;
           @media screen and (min-width: 769px) {
@@ -66,6 +81,36 @@
           }
           @media screen and (min-width: 1025px) {
             font-size: 2rem;
+          }
+          &:after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 4px;
+            background: white;
+            transition: width 0.5s;
+          }
+          &:hover:after {
+            width: 100%;
+          }
+        }
+
+        .welcome {
+          margin-left: 3rem;
+          #btn-logout {
+            font-size: 1rem;
+            margin-left: 0;
+            &:after {
+              content: '';
+              display: block;
+              width: 0;
+              height: 4px;
+              background: white;
+              transition: width 0.5s;
+            }
+            &:hover:after {
+              width: 100%;
+            }
           }
         }
       }
@@ -102,11 +147,11 @@
   }
 
   .activecollapse {
-    background: #6668f4;
+    background: #03364d;
     left: 0;
-    opacity: 1;
+    opacity: 0.9;
     transition: all 1.2s ease;
-    z-index: 1;
+    z-index: 11;
   }
 }
 
@@ -118,4 +163,13 @@
   visibility: hidden;
   transition: all 1.2s;
   transform: translateY(-100%);
+}
+
+.fa-virus {
+  font-size: 1.6rem;
+  margin: 0;
+  color: red;
+  @media screen and (min-width: 1025px) {
+    font-size: 2rem;
+  }
 }
