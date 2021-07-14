@@ -1,0 +1,175 @@
+.header {
+  background: linear-gradient(
+    to right,
+    #3a3e3f,
+    #9aafb8,
+    #79a4b6,
+    #7e9faa,
+    #064966
+  );
+  padding: 3rem 0;
+  height: 100px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 1.2rem;
+  top: 0;
+  position: fixed;
+  width: 100%;
+  transition: top 0.6s;
+  z-index: 100;
+  @media screen and (min-width: 376px) {
+    justify-content: space-around;
+  }
+
+  .navbar-logo {
+    color: #fff;
+    margin-left: 2rem;
+    justify-self: start;
+    cursor: pointer;
+    padding-top: 10px;
+    font-size: 2.3rem;
+    @media screen and (min-width: 376px) {
+      margin: 0 0 0 0.5rem;
+      padding: 0;
+      font-size: 2rem;
+      letter-spacing: 1px;
+    }
+    @media screen and (min-width: 376px) {
+      font-size: 2.5rem;
+    }
+    @media screen and (min-width: 1025px) {
+      font-size: 3rem;
+      margin-right: 20rem;
+    }
+    span {
+      font-size: 1.5rem;
+    }
+  }
+  .menu-icon {
+    padding-right: 30px;
+    color: white;
+    font-size: 2rem;
+    @media screen and (min-width: 376px) {
+      display: none;
+    }
+  }
+
+  .navbar {
+    display: none;
+
+    @media screen and (min-width: 376px) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      div:nth-child(1) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+
+        button {
+          font-size: 1.3rem;
+          margin-left: 2rem;
+          letter-spacing: 1px;
+          background: inherit;
+          border: none;
+          color: white;
+          @media screen and (min-width: 769px) {
+            font-size: 1.7rem;
+          }
+          @media screen and (min-width: 1025px) {
+            font-size: 2rem;
+          }
+          &:after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 4px;
+            background: white;
+            transition: width 0.5s;
+          }
+          &:hover:after {
+            width: 100%;
+          }
+        }
+
+        .welcome {
+          margin-left: 3rem;
+          #btn-logout {
+            font-size: 1rem;
+            margin-left: 0;
+            &:after {
+              content: '';
+              display: block;
+              width: 0;
+              height: 4px;
+              background: white;
+              transition: width 0.5s;
+            }
+            &:hover:after {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .nav-menu {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 300px;
+    position: absolute;
+    top: 80px;
+    left: -100%;
+    opacity: 1;
+    transition: all 1.2s ease;
+    @media screen and (min-width: 376px) {
+      display: none;
+    }
+
+    li {
+      color: white;
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+      text-transform: capitalize;
+      padding-left: 2rem;
+      margin: 0.4rem;
+    }
+    li:nth-child(1) {
+      font-size: 1.8rem;
+      padding-left: 1rem;
+    }
+  }
+
+  .activecollapse {
+    background: #03364d;
+    left: 0;
+    opacity: 0.9;
+    transition: all 1.2s ease;
+    z-index: 11;
+  }
+}
+
+.active {
+  visibility: visible;
+  transition: all 0.7s;
+}
+.hidden {
+  visibility: hidden;
+  transition: all 1.2s;
+  transform: translateY(-100%);
+}
+
+.fa-virus {
+  font-size: 1.6rem;
+  margin: 0;
+  color: red;
+  @media screen and (min-width: 1025px) {
+    font-size: 2rem;
+  }
+}

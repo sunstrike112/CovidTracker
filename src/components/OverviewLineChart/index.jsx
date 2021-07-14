@@ -66,7 +66,7 @@ function OverviewLineChart(props) {
     animation: {
       appear: {
         animation: 'path-in',
-        duration: 5000,
+        duration: 10000,
       },
     },
   };

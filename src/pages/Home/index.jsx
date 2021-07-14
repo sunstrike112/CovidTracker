@@ -5,13 +5,17 @@ import OverviewLineChart from '../../components/OverviewLineChart';
 import OverviewCard from '../../components/OverviewCard';
 import './Home.scss';
 
+import MainLayout from '../../HOCs/MainLayout';
+
 function Home(props) {
   return (
-    <div className="home">
-      <OverviewCard />
-      <OverviewMap />
-      <OverviewLineChart />
-    </div>
+    <MainLayout>
+      <div className="home">
+        <OverviewCard />
+        <OverviewMap />
+        <OverviewLineChart />
+      </div>
+    </MainLayout>
   );
 }
 

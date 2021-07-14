@@ -1,7 +1,21 @@
 .home {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   flex-direction: column;
   padding: 0;
+  margin-top: 6rem;
+  background: -webkit-linear-gradient(to right, #ffffff, #abbaab);
+  background: linear-gradient(to right, #ffffff, #abbaab);
+
+  > div {
+    margin-top: 0.5rem;
+    @media screen and (min-width: 376px) {
+      margin-top: 1.5rem;
+    }
+  }
+
+  .ant-layout-header {
+    background-color: white;
+  }
 }
