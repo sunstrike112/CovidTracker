@@ -4,7 +4,6 @@ import { Line } from '@ant-design/charts';
 import { DatePicker, Skeleton } from 'antd';
 import 'antd/dist/antd.css';
 import axios from 'axios';
-import _ from 'lodash';
 
 import './OverviewLineChart.scss';
 import {
@@ -20,6 +19,7 @@ function OverviewLineChart(props) {
   const [recovered, setRecovered] = useState([]);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const { RangePicker } = DatePicker;
   let dataFull = cases.concat(deaths, recovered);
   let dataFiltered = createDataPicked(
@@ -46,6 +46,9 @@ function OverviewLineChart(props) {
     };
 
     getCovidData();
+    setTimeout(() => {
+      setIsLoading(true);
+    }, 2000);
   }, []);
 
   const config = {
@@ -66,7 +69,7 @@ function OverviewLineChart(props) {
     animation: {
       appear: {
         animation: 'path-in',
-        duration: 5000,
+        duration: 10000,
       },
     },
   };
@@ -81,24 +84,26 @@ function OverviewLineChart(props) {
   return (
     <>
       <div className="overviewlinechart">
-        <p>
-          Diễn biến dịch covid trên thế giới từ&nbsp;
-          {startDate ? startDate : '1/22/20'} đến&nbsp;
-          {endDate ? endDate : cases[cases.length - 1]?.time}
-        </p>
-        <RangePicker
-          className="rangepicker"
-          format="MM-DD-YY"
-          placeholder={[
-            '1/22/20',
-            endDate ? endDate : cases[cases.length - 1]?.time,
-          ]}
-          onChange={handleDatePicker}
-        />
-        {_.isEmpty(recovered) ? (
-          <Skeleton className="lineskeleton" paragraph={{ rows: 10 }} active />
+        {!isLoading ? (
+          <Skeleton className="lineskeleton" paragraph={{ rows: 16 }} active />
         ) : (
-          <Line className="linechart" {...config} />
+          <>
+            <p>
+              Diễn biến dịch covid trên thế giới từ&nbsp;
+              {startDate ? startDate : '1/22/20'} đến&nbsp;
+              {endDate ? endDate : cases[cases.length - 1]?.time}
+            </p>
+            <RangePicker
+              className="rangepicker"
+              format="MM-DD-YY"
+              placeholder={[
+                '1/22/20',
+                endDate ? endDate : cases[cases.length - 1]?.time,
+              ]}
+              onChange={handleDatePicker}
+            />
+            <Line className="linechart" {...config} />
+          </>
         )}
       </div>
     </>

@@ -3,24 +3,29 @@ import React, { useState, useEffect } from 'react';
 import { Card, Skeleton } from 'antd';
 import 'antd/dist/antd.css';
 import _ from 'lodash';
-
-import { formatNumber } from '../../../utils/FormatNumber/index';
+import numeral from 'numeral';
 
 function ActiveCasesCard(props) {
   const { covidData } = props;
   const [activeCases, setActiveCases] = useState(0);
   const [activeCasesPerMillion, setActiveCasesPerMillion] = useState(0);
   const [criticalCases, setCriticalCases] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setActiveCases(formatNumber(covidData.active));
-    setActiveCasesPerMillion(formatNumber(covidData.activePerOneMillion));
-    setCriticalCases(formatNumber(covidData.critical));
+    setActiveCases(numeral(covidData.active).format('0.0a'));
+    setActiveCasesPerMillion(
+      numeral(covidData.activePerOneMillion).format('0.0a')
+    );
+    setCriticalCases(numeral(covidData.critical).format('0.0a'));
+    setTimeout(() => {
+      setIsLoading(true);
+    }, 2000);
   }, [covidData]);
 
   return (
     <Card title="Điều trị">
-      {!_.isEmpty(covidData) ? (
+      {isLoading ? (
         <>
           <p>{activeCases}</p>
           <p>

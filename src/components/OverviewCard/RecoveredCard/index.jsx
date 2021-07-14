@@ -3,24 +3,29 @@ import React, { useState, useEffect } from 'react';
 import { Card, Skeleton } from 'antd';
 import 'antd/dist/antd.css';
 import _ from 'lodash';
-
-import { formatNumber } from '../../../utils/FormatNumber/index';
+import numeral from 'numeral';
 
 function RecoveredCard(props) {
   const { covidData } = props;
   const [recovered, setRecovered] = useState(0);
   const [todayRecovered, setTodayRecovered] = useState(0);
   const [recoveredPerMillion, setRecoveredPerMillion] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setRecovered(formatNumber(covidData.recovered));
-    setTodayRecovered(formatNumber(covidData.todayRecovered));
-    setRecoveredPerMillion(formatNumber(covidData.recoveredPerOneMillion));
+    setRecovered(numeral(covidData.recovered).format('0.0a'));
+    setTodayRecovered(numeral(covidData.todayRecovered).format('0.0a'));
+    setRecoveredPerMillion(
+      numeral(covidData.recoveredPerOneMillion).format('0.0a')
+    );
+    setTimeout(() => {
+      setIsLoading(true);
+    }, 2000);
   }, [covidData]);
 
   return (
     <Card title="Đã khỏi">
-      {!_.isEmpty(covidData) ? (
+      {isLoading ? (
         <>
           <p>{recovered}</p>
           <p>

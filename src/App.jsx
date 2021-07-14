@@ -5,8 +5,8 @@ import './App.css';
 import GlobalLoading from './components/GlobalLoading';
 import SignIn from './pages/SignIn';
 import NotFound from './pages/NotFound/index';
-import AuthRoute from './router/AuthRoute/AuthRoute';
-import PrivateRoute from './router/PrivateRoute/PrivateRoute';
+import AuthRoute from './HOCs/AuthRoute/AuthRoute';
+import PrivateRoute from './HOCs/PrivateRoute/PrivateRoute';
 import Home from './pages/Home';
 
 function App() {

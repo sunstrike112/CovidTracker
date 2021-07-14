@@ -3,24 +3,27 @@ import React, { useState, useEffect } from 'react';
 import { Card, Skeleton } from 'antd';
 import 'antd/dist/antd.css';
 import _ from 'lodash';
-
-import { formatNumber } from '../../../utils/FormatNumber/index';
+import numeral from 'numeral';
 
 function CasesCard(props) {
   const { covidData } = props;
   const [cases, setCases] = useState(0);
   const [todayCases, setTodayCases] = useState(0);
   const [casesPerMillion, setCasesPerMillion] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setCases(formatNumber(covidData?.cases));
-    setTodayCases(formatNumber(covidData?.todayCases));
-    setCasesPerMillion(formatNumber(covidData?.casesPerOneMillion));
+    setCases(numeral(covidData.cases).format('0.0a'));
+    setTodayCases(numeral(covidData.todayCases).format('0.0a'));
+    setCasesPerMillion(numeral(covidData.casesPerOneMillion).format('0.0a'));
+    setTimeout(() => {
+      setIsLoading(true);
+    }, 2000);
   }, [covidData]);
 
   return (
     <Card title="Số ca">
-      {!_.isEmpty(covidData) ? (
+      {isLoading ? (
         <>
           <p>{cases}</p>
           <p>
