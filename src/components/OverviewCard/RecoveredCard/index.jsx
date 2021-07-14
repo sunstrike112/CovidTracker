@@ -10,6 +10,7 @@ function RecoveredCard(props) {
   const [recovered, setRecovered] = useState(0);
   const [todayRecovered, setTodayRecovered] = useState(0);
   const [recoveredPerMillion, setRecoveredPerMillion] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setRecovered(numeral(covidData.recovered).format('0.0a'));
@@ -17,11 +18,14 @@ function RecoveredCard(props) {
     setRecoveredPerMillion(
       numeral(covidData.recoveredPerOneMillion).format('0.0a')
     );
+    setTimeout(() => {
+      setIsLoading(true);
+    }, 2000);
   }, [covidData]);
 
   return (
     <Card title="Đã khỏi">
-      {!_.isEmpty(covidData) ? (
+      {isLoading ? (
         <>
           <p>{recovered}</p>
           <p>

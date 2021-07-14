@@ -14,16 +14,19 @@
   .ant-card {
     width: 23%;
     margin: 10px 0;
+    height: 9rem;
     font-size: 0.8rem;
     letter-spacing: 1px;
     text-align: center;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     @media screen and (min-width: 376px) {
-      font-size: 1rem;
+      height: 13.3rem;
+      font-size: 1.5rem;
       width: 20%;
     }
     @media screen and (min-width: 769px) {
+      height: 14rem;
       font-size: 1.3rem;
       width: 20%;
     }
@@ -62,12 +65,12 @@
       p {
         font-weight: bold;
         margin-bottom: 5px;
-        background: inherit;
       }
       > p:nth-child(1) {
         font-size: 1rem;
 
         @media screen and (min-width: 376px) {
+          margin-top: 1rem;
           font-size: 1.45rem;
         }
         @media screen and (min-width: 1023px) {
