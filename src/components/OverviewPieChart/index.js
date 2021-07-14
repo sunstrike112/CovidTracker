@@ -5,7 +5,6 @@ import 'antd/dist/antd.css';
 import axios from 'axios';
 
 import './OverviewPieChart.scss';
-import { set } from 'lodash';
 
 function OverviewPieChart(props) {
   const [casesNA, setCasesNA] = useState([]);

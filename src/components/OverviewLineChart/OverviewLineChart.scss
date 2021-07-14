@@ -27,6 +27,7 @@
   @media screen and (min-width: 769px) {
     font-size: 1.2rem;
     width: 50%;
+    background: linear-gradient(to right, #d0dbd0, #ffffff);
   }
   @media screen and (min-width: 1025px) {
     font-size: 2rem;
@@ -61,7 +62,7 @@
 .ant-picker {
   border-radius: 10px;
   font-size: 0.8rem;
-  color: black;
+  font-weight: bold;
   padding: 3px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 1px 8px;
   @media screen and (min-width: 376px) {
@@ -78,6 +79,7 @@
     > input {
       text-align: center;
       letter-spacing: 4px;
+      font-weight: bold;
       &::placeholder {
         color: black;
         font-weight: bold;

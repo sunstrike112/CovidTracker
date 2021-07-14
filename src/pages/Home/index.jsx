@@ -4,6 +4,7 @@ import OverviewMap from '../../components/OverviewMap';
 import OverviewLineChart from '../../components/OverviewLineChart';
 import OverviewPieChart from '../../components/OverviewPieChart';
 import OverviewCard from '../../components/OverviewCard';
+import OverviewTable from '../../components/OverviewTable';
 import './Home.scss';
 
 import MainLayout from '../../HOCs/MainLayout';
@@ -18,6 +19,7 @@ function Home(props) {
           <OverviewLineChart />
           <OverviewPieChart />
         </div>
+        <OverviewTable />
       </div>
     </MainLayout>
   );
