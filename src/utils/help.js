@@ -231,6 +231,30 @@ const filterData = (startDate, endDate, cases, deaths, recovered) => {
   return casesFiltered.concat(deathsFiltered, recoveredFiltered);
 };
 
+const getDataMap = (url) =>
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) =>
+      data.map((point, index) => ({
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [
+            point.coordinates.longitude,
+            point.coordinates.latitude,
+          ],
+        },
+        properties: {
+          id: index,
+          country: point.country,
+          province: point.province,
+          cases: point.stats.confirmed,
+          deaths: point.stats.deaths,
+          recovered: point.stats.recovered,
+        },
+      }))
+    );
+
 export const help = {
   sortNumber: sortNumber,
   sortAlphabetic: sortAlphabetic,
@@ -242,4 +266,5 @@ export const help = {
   declareMap: declareMap,
   declarePopup: declarePopup,
   filterData: filterData,
+  getDataMap: getDataMap,
 };
