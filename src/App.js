@@ -8,14 +8,16 @@ import NotFound from './pages/NotFound/index';
 import AuthRoute from './HOCs/AuthRoute/AuthRoute';
 import PrivateRoute from './HOCs/PrivateRoute/PrivateRoute';
 import Home from './pages/Home';
+import News from './pages/News';
 
 function App() {
   return (
     <>
       <Router className="App">
         <Switch>
+          <Route exact path="/" component={News} />
           <AuthRoute path="/signin" component={SignIn} />
-          <PrivateRoute exact path="/" component={Home} />
+          <PrivateRoute path="/overview" component={Home} />
           <Route component={NotFound} />
         </Switch>
       </Router>

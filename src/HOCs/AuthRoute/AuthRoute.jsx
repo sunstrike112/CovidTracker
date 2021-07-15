@@ -12,7 +12,9 @@ function AuthRoute({ component: Component, ...rest }) {
           return checkLoggedIn() === false ? (
             <Component {...props} />
           ) : (
-            <Redirect to={{ pathname: '/', state: { from: props.location } }} />
+            <Redirect
+              to={{ pathname: '/overview', state: { from: props.location } }}
+            />
           );
         }}
       />

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-
-import classNames from 'classnames';
+import { useHistory } from 'react-router';
 
 import './Header.scss';
 
 function Header(props) {
+  const history = useHistory();
   const [isCollapsed, setIsCollapse] = useState(false);
   const [prevScrollpos, setPrevScrollpos] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
@@ -25,6 +25,18 @@ function Header(props) {
     setIsCollapse(!isCollapsed);
   };
 
+  const handleNewsPage = () => {
+    history.push('/');
+  };
+
+  const handleOverviewPage = () => {
+    history.push('/overview');
+  };
+
+  const handleCountryPage = () => {
+    history.push('/country');
+  };
+
   return (
     <nav className={isVisible ? 'active header' : 'hidden header'}>
       <h1 className="navbar-logo">
@@ -32,9 +44,9 @@ function Header(props) {
       </h1>
       <div className="navbar">
         <div>
-          <button>Overview</button>
-          <button>Country</button>
-          <button>News</button>
+          <button onClick={handleOverviewPage}>Overview</button>
+          <button onClick={handleCountryPage}>Country</button>
+          <button onClick={handleNewsPage}>News</button>
           <div className="welcome">
             <div>Hi admin</div>
             <button id="btn-logout">Log out</button>
