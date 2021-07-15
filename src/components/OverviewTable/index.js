@@ -131,7 +131,11 @@ function OverviewTable(props) {
 
   return (
     <div className="overviewtable">
-      <Table columns={columns} dataSource={data} />
+      <Table
+        columns={columns}
+        pagination={{ position: ['topLeft', 'bottomRight'] }}
+        dataSource={data}
+      />
     </div>
   );
 }
