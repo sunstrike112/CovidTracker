@@ -6,11 +6,7 @@ import useSWR from 'swr';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import './OverviewMap.scss';
-import {
-  configMap,
-  declareMap,
-  declarePopup,
-} from '../../utils/ConfigMap/index';
+import { help } from '../../utils/help';
 
 mapboxgl.accessToken = `pk.eyJ1Ijoic3Vuc3RyaWtlMTEyIiwiYSI6ImNrcXV4OTY2djA2bDIydXBjNHZobTBtbzMifQ.BYCyLBgyOMbG7eycxXX_6A`;
 
@@ -46,9 +42,9 @@ function OverviewMap() {
   useEffect(() => {
     setTimeout(() => {
       if (data) {
-        const map = declareMap(covidMap);
-        const popup = declarePopup();
-        configMap(map, popup, data);
+        const map = help.declareMap(covidMap);
+        const popup = help.declarePopup();
+        help.configMap(map, popup, data);
       }
       setLoadMap(true);
     }, 2000);

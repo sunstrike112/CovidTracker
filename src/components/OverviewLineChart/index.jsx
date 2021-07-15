@@ -4,15 +4,9 @@ import { Line } from '@ant-design/charts';
 import { DatePicker, Skeleton } from 'antd';
 import 'antd/dist/antd.css';
 import axios from 'axios';
-import _ from 'lodash';
 
 import './OverviewLineChart.scss';
-import {
-  formatCases,
-  formatDeaths,
-  formatRecovered,
-} from '../../utils/FormatData/index';
-import { createDataPicked } from '../../utils/CreateDataPicked/index';
+import { help } from '../../utils/help';
 
 function OverviewLineChart(props) {
   const [cases, setCases] = useState([]);
@@ -20,9 +14,10 @@ function OverviewLineChart(props) {
   const [recovered, setRecovered] = useState([]);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const { RangePicker } = DatePicker;
   let dataFull = cases.concat(deaths, recovered);
-  let dataFiltered = createDataPicked(
+  let dataFiltered = help.filterData(
     startDate,
     endDate,
     cases,
@@ -36,9 +31,9 @@ function OverviewLineChart(props) {
       axios
         .get(`https://disease.sh/v3/covid-19/historical/all?lastdays=all`)
         .then((response) => {
-          setCases(formatCases(response.data.cases));
-          setDeaths(formatDeaths(response.data.deaths));
-          setRecovered(formatRecovered(response.data.recovered));
+          setCases(help.formatCases(response.data.cases));
+          setDeaths(help.formatDeaths(response.data.deaths));
+          setRecovered(help.formatRecovered(response.data.recovered));
         })
         .catch(() => {
           alert(`Request to API failed, Please try again !!!`);
@@ -46,6 +41,9 @@ function OverviewLineChart(props) {
     };
 
     getCovidData();
+    setTimeout(() => {
+      setIsLoading(true);
+    }, 2000);
   }, []);
 
   const config = {
@@ -81,24 +79,26 @@ function OverviewLineChart(props) {
   return (
     <>
       <div className="overviewlinechart">
-        <p>
-          Diễn biến dịch covid trên thế giới từ&nbsp;
-          {startDate ? startDate : '1/22/20'} đến&nbsp;
-          {endDate ? endDate : cases[cases.length - 1]?.time}
-        </p>
-        <RangePicker
-          className="rangepicker"
-          format="MM-DD-YY"
-          placeholder={[
-            '1/22/20',
-            endDate ? endDate : cases[cases.length - 1]?.time,
-          ]}
-          onChange={handleDatePicker}
-        />
-        {_.isEmpty(recovered) ? (
-          <Skeleton className="lineskeleton" paragraph={{ rows: 10 }} active />
+        {!isLoading ? (
+          <Skeleton className="lineskeleton" paragraph={{ rows: 16 }} active />
         ) : (
-          <Line className="linechart" {...config} />
+          <>
+            <p>
+              Diễn biến dịch covid trên thế giới từ&nbsp;
+              {startDate ? startDate : '1/22/20'} đến&nbsp;
+              {endDate ? endDate : cases[cases.length - 1]?.time}
+            </p>
+            <RangePicker
+              className="rangepicker"
+              format="MM-DD-YY"
+              placeholder={[
+                '1/22/20',
+                endDate ? endDate : cases[cases.length - 1]?.time,
+              ]}
+              onChange={handleDatePicker}
+            />
+            <Line className="linechart" {...config} />
+          </>
         )}
       </div>
     </>

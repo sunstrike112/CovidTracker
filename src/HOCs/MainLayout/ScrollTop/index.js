@@ -26,7 +26,7 @@ function ScrollTop(props) {
     <>
       {isVisible && (
         <button className="scrolltop" onClick={scrollToTop}>
-          <i class="fas fa-arrow-up"></i>
+          <i className="fas fa-arrow-up"></i>
         </button>
       )}
     </>

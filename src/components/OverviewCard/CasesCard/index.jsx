@@ -10,16 +10,20 @@ function CasesCard(props) {
   const [cases, setCases] = useState(0);
   const [todayCases, setTodayCases] = useState(0);
   const [casesPerMillion, setCasesPerMillion] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setCases(numeral(covidData.cases).format('0.0a'));
     setTodayCases(numeral(covidData.todayCases).format('0.0a'));
     setCasesPerMillion(numeral(covidData.casesPerOneMillion).format('0.0a'));
+    setTimeout(() => {
+      setIsLoading(true);
+    }, 2000);
   }, [covidData]);
 
   return (
     <Card title="Số ca">
-      {!_.isEmpty(covidData) ? (
+      {isLoading ? (
         <>
           <p>{cases}</p>
           <p>

@@ -10,6 +10,7 @@ function ActiveCasesCard(props) {
   const [activeCases, setActiveCases] = useState(0);
   const [activeCasesPerMillion, setActiveCasesPerMillion] = useState(0);
   const [criticalCases, setCriticalCases] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setActiveCases(numeral(covidData.active).format('0.0a'));
@@ -17,11 +18,14 @@ function ActiveCasesCard(props) {
       numeral(covidData.activePerOneMillion).format('0.0a')
     );
     setCriticalCases(numeral(covidData.critical).format('0.0a'));
+    setTimeout(() => {
+      setIsLoading(true);
+    }, 2000);
   }, [covidData]);
 
   return (
     <Card title="Điều trị">
-      {!_.isEmpty(covidData) ? (
+      {isLoading ? (
         <>
           <p>{activeCases}</p>
           <p>
