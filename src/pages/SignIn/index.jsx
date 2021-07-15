@@ -33,7 +33,7 @@ function LoginPage(props) {
       if (username === 'admin' && password === 'admin') {
         localStorage.setItem('username', username);
         localStorage.setItem('password', password);
-        history.push('/');
+        history.push('/overview');
         setIsLoggedIn(true);
       } else {
         setIsLoggedIn(false);

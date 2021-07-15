@@ -37,6 +37,11 @@ function Header(props) {
     history.push('/country');
   };
 
+  const handleLogOut = () => {
+    localStorage.clear();
+    history.push('/');
+  };
+
   return (
     <nav className={isVisible ? 'active header' : 'hidden header'}>
       <h1 className="navbar-logo">
@@ -49,7 +54,9 @@ function Header(props) {
           <button onClick={handleNewsPage}>News</button>
           <div className="welcome">
             <div>Hi admin</div>
-            <button id="btn-logout">Log out</button>
+            <button onClick={handleLogOut} id="btn-logout">
+              Log out
+            </button>
           </div>
         </div>
       </div>
@@ -58,10 +65,10 @@ function Header(props) {
       </div>
       <ul className={isCollapsed ? 'nav-menu activecollapse' : 'nav-menu'}>
         <li>Hi admin</li>
-        <li>Overview</li>
-        <li>Country</li>
-        <li>News</li>
-        <li>Log out</li>
+        <li onClick={handleOverviewPage}>Overview</li>
+        <li onClick={handleCountryPage}>Country</li>
+        <li onClick={handleNewsPage}>News</li>
+        <li onClick={handleLogOut}>Log out</li>
       </ul>
     </nav>
   );

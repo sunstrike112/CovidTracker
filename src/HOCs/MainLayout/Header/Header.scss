@@ -143,6 +143,19 @@
       text-transform: capitalize;
       padding-left: 2rem;
       margin: 0.4rem;
+      &:after {
+        content: '';
+        display: block;
+        width: 0;
+        height: 4px;
+        background: white;
+        transition: width 0.5s;
+      }
+      &:active:after,
+      &:hover::after,
+      &:focus::after {
+        width: 50%;
+      }
     }
     li:nth-child(1) {
       font-size: 1.8rem;

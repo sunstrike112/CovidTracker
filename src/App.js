@@ -15,9 +15,9 @@ function App() {
     <>
       <Router className="App">
         <Switch>
-          <Route exact path="/" component={News} />
           <AuthRoute path="/signin" component={SignIn} />
           <PrivateRoute path="/overview" component={Home} />
+          <Route exact path="/" component={News} />
           <Route component={NotFound} />
         </Switch>
       </Router>
