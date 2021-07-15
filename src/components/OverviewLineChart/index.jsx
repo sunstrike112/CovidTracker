@@ -6,12 +6,7 @@ import 'antd/dist/antd.css';
 import axios from 'axios';
 
 import './OverviewLineChart.scss';
-import {
-  formatCases,
-  formatDeaths,
-  formatRecovered,
-} from '../../utils/FormatData/index';
-import { createDataPicked } from '../../utils/CreateDataPicked/index';
+import { help } from '../../utils/help';
 
 function OverviewLineChart(props) {
   const [cases, setCases] = useState([]);
@@ -22,7 +17,7 @@ function OverviewLineChart(props) {
   const [isLoading, setIsLoading] = useState(false);
   const { RangePicker } = DatePicker;
   let dataFull = cases.concat(deaths, recovered);
-  let dataFiltered = createDataPicked(
+  let dataFiltered = help.filterData(
     startDate,
     endDate,
     cases,
@@ -36,9 +31,9 @@ function OverviewLineChart(props) {
       axios
         .get(`https://disease.sh/v3/covid-19/historical/all?lastdays=all`)
         .then((response) => {
-          setCases(formatCases(response.data.cases));
-          setDeaths(formatDeaths(response.data.deaths));
-          setRecovered(formatRecovered(response.data.recovered));
+          setCases(help.formatCases(response.data.cases));
+          setDeaths(help.formatDeaths(response.data.deaths));
+          setRecovered(help.formatRecovered(response.data.recovered));
         })
         .catch(() => {
           alert(`Request to API failed, Please try again !!!`);

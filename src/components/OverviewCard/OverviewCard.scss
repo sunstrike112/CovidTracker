@@ -113,13 +113,13 @@
 
 @mixin color($i) {
   @if ($i == 1) {
-    color: red;
+    color: rgb(236, 33, 33);
   } @else if ($i == 2) {
-    color: rgb(95, 95, 23);
+    color: rgb(37, 37, 34);
   } @else if ($i == 3) {
-    color: blue;
+    color: rgb(81, 81, 241);
   } @else {
-    color: green;
+    color: rgb(16, 163, 16);
   }
 }
 
