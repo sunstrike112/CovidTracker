@@ -1,6 +1,7 @@
 import React from 'react';
 
 import axios from 'axios';
+import { Row, Col } from 'antd';
 
 import './News.scss';
 

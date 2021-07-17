@@ -12,16 +12,14 @@ import News from './pages/News';
 
 function App() {
   return (
-    <>
-      <Router className="App">
-        <Switch>
-          <AuthRoute path="/signin" component={SignIn} />
-          <PrivateRoute path="/overview" component={Home} />
-          <Route exact path="/" component={News} />
-          <Route component={NotFound} />
-        </Switch>
-      </Router>
-    </>
+    <Router className="App">
+      <Switch>
+        <AuthRoute path="/signin" component={SignIn} />
+        <PrivateRoute path="/overview" component={Home} />
+        <Route exact path="/" component={News} />
+        <Route component={NotFound} />
+      </Switch>
+    </Router>
   );
 }
 

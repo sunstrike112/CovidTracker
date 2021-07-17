@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import 'antd/dist/antd.css';
 import useSWR from 'swr';
 
-import { help } from '../../utils/help';
+import { helper } from '../../utils/helper';
 import Table from './Table';
 import './OverviewTable.scss';
 
@@ -38,7 +38,7 @@ function OverviewTable(props) {
       dataIndex: 'country',
       key: 'country',
       width: 50,
-      sorter: { compare: help.sortAlphabetic, multiple: 8 },
+      sorter: { compare: helper.sortAlphabetic, multiple: 8 },
       render: (text, record) => {
         return (
           <div>
@@ -82,50 +82,58 @@ function OverviewTable(props) {
         },
       ],
       onFilter: (value, record) => record.continent.indexOf(value) === 0,
-      responsive: ['sm'],
+      responsive: ['lg'],
     },
     {
       title: 'Cases',
       dataIndex: 'cases',
       key: 'cases',
-      sorter: { compare: help.sortNumber, multiple: 7 },
+      sorter: { compare: helper.sortNumber, multiple: 7 },
     },
     {
       title: 'Today Cases',
       dataIndex: 'todayCases',
       key: 'todayCases',
-      sorter: { compare: help.sortNumber, multiple: 6 },
+      responsive: ['sm'],
+      responsive: ['lg'],
+      sorter: { compare: helper.sortNumber, multiple: 6 },
     },
     {
       title: 'Deaths',
       dataIndex: 'deaths',
       key: 'deaths',
-      sorter: { compare: help.sortNumber, multiple: 5 },
+      sorter: { compare: helper.sortNumber, multiple: 5 },
     },
     {
       title: 'Today Deaths',
       dataIndex: 'todayDeaths',
       key: 'todayDeaths',
-      sorter: { compare: help.sortNumber, multiple: 4 },
+      sorter: { compare: helper.sortNumber, multiple: 4 },
+      responsive: ['sm'],
     },
     {
       title: 'Active',
       dataIndex: 'active',
       key: 'active',
       responsive: ['sm'],
-      sorter: { compare: help.sortNumber, multiple: 3 },
+      // responsive: ['lg'],
+      responsive: ['xl'],
+      sorter: { compare: helper.sortNumber, multiple: 3 },
     },
     {
       title: 'Recovered',
       dataIndex: 'recovered',
       key: 'recovered',
-      sorter: { compare: help.sortNumber, multiple: 2 },
+      sorter: { compare: helper.sortNumber, multiple: 2 },
     },
     {
       title: 'Today Recovered',
       dataIndex: 'todayRecovered',
       key: 'todayRecovered',
-      sorter: { compare: help.sortNumber, multiple: 1 },
+      responsive: ['sm'],
+      responsive: ['lg'],
+      responsive: ['xl'],
+      sorter: { compare: helper.sortNumber, multiple: 1 },
     },
   ];
 
@@ -133,7 +141,7 @@ function OverviewTable(props) {
     <div className="overviewtable">
       <Table
         columns={columns}
-        pagination={{ position: ['topLeft', 'bottomRight'] }}
+        pagination={{ position: ['bottomRight'] }}
         dataSource={data}
       />
     </div>

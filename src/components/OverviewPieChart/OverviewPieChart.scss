@@ -5,7 +5,9 @@
   flex-direction: column;
   background: inherit;
   animation: appear3;
+  margin: 2rem 0;
   animation-duration: 8s;
+  width: 95vw;
 
   @keyframes appear3 {
     from {

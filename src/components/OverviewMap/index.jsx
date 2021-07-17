@@ -4,7 +4,7 @@ import mapboxgl from 'mapbox-gl';
 import useSWR from 'swr';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-import { help } from '../../utils/help';
+import { helper } from '../../utils/helper';
 import './OverviewMap.scss';
 
 mapboxgl.accessToken = `pk.eyJ1Ijoic3Vuc3RyaWtlMTEyIiwiYSI6ImNrcXV4OTY2djA2bDIydXBjNHZobTBtbzMifQ.BYCyLBgyOMbG7eycxXX_6A`;
@@ -15,15 +15,15 @@ function OverviewMap() {
 
   const { data } = useSWR(
     'https://disease.sh/v3/covid-19/jhucsse',
-    help.getDataMap
+    helper.getDataMap
   );
 
   useEffect(() => {
     if (data && covidMap.current && !map) {
-      const overviewMap = help.declareMap(covidMap);
+      const overviewMap = helper.declareMap(covidMap);
       setMap(covidMap);
-      const popup = help.declarePopup();
-      help.configMap(overviewMap, popup, data);
+      const popup = helper.declarePopup();
+      helper.configMap(overviewMap, popup, data);
     }
   }, [data, covidMap, map]);
   console.log(covidMap);
