@@ -8,11 +8,11 @@ import ScrollTop from './ScrollTop';
 function MainLayout(props) {
   return (
     <>
-      <div>
+      <>
         <Header />
         {props.children}
         <Footer />
-      </div>
+      </>
       <ScrollTop />
     </>
   );

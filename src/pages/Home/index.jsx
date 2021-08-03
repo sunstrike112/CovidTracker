@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Row, Col } from 'antd';
+
 import OverviewMap from '../../components/OverviewMap';
 import OverviewLineChart from '../../components/OverviewLineChart';
 import OverviewPieChart from '../../components/OverviewPieChart';
@@ -12,15 +14,19 @@ import MainLayout from '../../HOCs/MainLayout';
 function Home(props) {
   return (
     <MainLayout>
-      <div className="home">
-        <OverviewCard />
-        <OverviewMap />
-        <div className="overviewchart">
-          <OverviewLineChart />
-          <OverviewPieChart />
-        </div>
-        <OverviewTable />
-      </div>
+      <Row>
+        <Col span={24}>
+          <div className="home">
+            <OverviewCard />
+            <OverviewMap />
+            <div className="overviewchart">
+              <OverviewLineChart />
+              <OverviewPieChart />
+            </div>
+            <OverviewTable />
+          </div>
+        </Col>
+      </Row>
     </MainLayout>
   );
 }
